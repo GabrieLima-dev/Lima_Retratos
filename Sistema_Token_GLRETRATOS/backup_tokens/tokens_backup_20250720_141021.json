@@ -1,0 +1,13 @@
+{
+  "14cef558-bfb": {
+    "cliente": "TESTE",
+    "categoria": "Batizados",
+    "pasta": "TESTE_01",
+    "downloads_permitidos": true,
+    "fotos_baixadas": [],
+    "acessos": [],
+    "criado_em": "2025-07-20T14:10:21.201118",
+    "expira_em": "2025-08-19T14:10:21.200227",
+    "ativo": true
+  }
+}
