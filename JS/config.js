@@ -13,12 +13,15 @@ const CONFIG = {
 
     // ===== BOX API =====
     box: {
-        clientId: 'YOUR_BOX_CLIENT_ID',
-        clientSecret: 'YOUR_BOX_CLIENT_SECRET',
-        redirectUri: window.location.origin + '/auth/callback',
+        clientId: '7qzbuv0z2kxj5ncgacbthi8xjem4uarg',
+        clientSecret: 'eJgsO4XgvCilz1tH4Qi4XK3EWtxYiqFj',
+        redirectUri: window.location.origin + '/callback.html',
+        rootFolderId: '0', // ID da pasta raiz (0 = raiz da conta)
+        mainFolderName: 'Gabriel Lima Retratos', // Nome da pasta principal
         corsProxy: 'https://cors-anywhere.herokuapp.com/',
         enableMockData: true, // true para desenvolvimento, false para produção
-        cacheExpiry: 300000 // 5 minutos
+        cacheExpiry: 300000, // 5 minutos
+        apiVersion: '2.0'
     },
 
     // ===== AUTENTICAÇÃO =====
