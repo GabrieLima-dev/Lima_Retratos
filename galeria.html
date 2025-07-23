@@ -64,7 +64,7 @@
             <form id="tokenForm" class="token-form">
                 <div class="form-group">
                     <label for="tokenInput">Token de Acesso</label>
-                    <input type="text" id="tokenInput" placeholder="Digite seu token aqui" required>
+                    <input type="text" id="tokenInput" placeholder="Ex: 6f5ef5fe-299" required maxlength="15">
                     <small>O token foi enviado para você via WhatsApp</small>
                 </div>
                 
@@ -82,6 +82,19 @@
                     Falar com Gabriel
                 </a>
             </div>
+        </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="errorScreen" class="error-screen" style="display: none;">
+        <div class="error-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Acesso Negado</h2>
+            <p id="errorMessage">Token inválido ou expirado</p>
+            <button id="tryAgainBtn" class="btn btn-primary">
+                <i class="fas fa-redo"></i>
+                Tentar Novamente
+            </button>
         </div>
     </div>
 
@@ -195,45 +208,8 @@
         </div>
     </div>
 
-    <!-- Error Screen -->
-    <div id="errorScreen" class="error-screen" style="display: none;">
-        <div class="error-container">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Acesso Negado</h2>
-            <p id="errorMessage">Token inválido ou expirado</p>
-            <button id="tryAgainBtn" class="btn btn-primary">
-                <i class="fas fa-redo"></i>
-                Tentar Novamente
-            </button>
-        </div>
-    </div>
-
-    <!-- Download Progress -->
-    <div id="downloadProgress" class="download-progress" style="display: none;">
-        <div class="progress-container">
-            <div class="progress-header">
-                <h3>Preparando Download</h3>
-                <button id="cancelDownloadBtn" class="btn btn-secondary">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <p class="progress-text">
-                <span id="progressText">Iniciando...</span>
-                <span id="progressPercent">0%</span>
-            </p>
-        </div>
-    </div>
-
-    <!-- Notification Container -->
-    <div id="notificationContainer" class="notification-container"></div>
-
-    <!-- Scripts -->
-    <script src="JS/auth.js"></script>
-    <script src="JS/box_api.js"></script>
-    <script src="JS/watermark_js.js"></script>
-    <script src="JS/galeria.js"></script>
+    <!-- Scripts Simplificados -->
+    <script src="./JS/auth_simples.js"></script>
+    <script src="./JS/galeria_simples.js"></script>
 </body>
 </html>

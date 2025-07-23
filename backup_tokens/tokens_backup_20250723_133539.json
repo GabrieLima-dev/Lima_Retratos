@@ -1,0 +1,35 @@
+{
+  "6f5ef5fe-299": {
+    "cliente": "Gabriel Lima TESTE 1",
+    "categoria": "Batizados",
+    "pasta": "Gabriel_Batizado_23_07_2025",
+    "downloads_permitidos": true,
+    "fotos_baixadas": [],
+    "acessos": [],
+    "criado_em": "2025-07-23T13:21:31.838062",
+    "expira_em": "2025-08-22T13:21:31.838062",
+    "ativo": true
+  },
+  "dea2fe61-9e7": {
+    "cliente": "Lima TESTE",
+    "categoria": "Outros",
+    "pasta": "TESTE_123",
+    "downloads_permitidos": true,
+    "fotos_baixadas": [],
+    "acessos": [],
+    "criado_em": "2025-07-23T13:30:29.461998",
+    "expira_em": "2025-08-22T13:30:29.458386",
+    "ativo": true
+  },
+  "2125dbb3-c7a": {
+    "cliente": "TESTE 13:35",
+    "categoria": "Outros",
+    "pasta": "123456789",
+    "downloads_permitidos": true,
+    "fotos_baixadas": [],
+    "acessos": [],
+    "criado_em": "2025-07-23T13:35:39.172285",
+    "expira_em": "2025-08-22T13:35:39.171233",
+    "ativo": true
+  }
+}

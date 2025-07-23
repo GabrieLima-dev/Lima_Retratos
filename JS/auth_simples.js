@@ -1,13 +1,10 @@
-// ===== SISTEMA DE AUTENTICAÇÃO =====
+// ===== SISTEMA DE AUTENTICAÇÃO SIMPLES =====
 
-class AuthSystem {
+class AuthSimples {
     constructor() {
-        this.currentToken = null;
-        this.clientData = null;
+        this.tokenValido = null;
+        this.clienteData = null;
         this.isAuthenticated = false;
-        this.tokenValidationUrl = 'tokens.json'; // Local para testes
-        this.retryAttempts = 0;
-        this.maxRetries = 3;
         
         this.init();
     }
@@ -18,14 +15,13 @@ class AuthSystem {
         this.showLoginScreen();
     }
 
-    // ===== VERIFICAÇÃO DE TOKEN NA URL =====
+    // ===== VERIFICAR TOKEN NA URL =====
     checkUrlToken() {
         const urlParams = new URLSearchParams(window.location.search);
         const tokenFromUrl = urlParams.get('token');
         
         if (tokenFromUrl) {
             document.getElementById('tokenInput').value = tokenFromUrl;
-            // Auto-submit se token válido na URL
             this.validateToken(tokenFromUrl);
         }
     }
@@ -54,61 +50,47 @@ class AuthSystem {
                 this.logout();
             });
         }
-
-        // Auto-formatação do token input
-        const tokenInput = document.getElementById('tokenInput');
-        if (tokenInput) {
-            tokenInput.addEventListener('input', this.formatTokenInput);
-            tokenInput.addEventListener('paste', this.handleTokenPaste);
-        }
-    }
-
-    // ===== FORMATAÇÃO DO INPUT =====
-    formatTokenInput(e) {
-        let value = e.target.value.replace(/[^a-zA-Z0-9]/g, '');
-        if (value.length > 12) {
-            value = value.substring(0, 12);
-        }
-        e.target.value = value;
-    }
-
-    handleTokenPaste(e) {
-        e.preventDefault();
-        const paste = (e.clipboardData || window.clipboardData).getData('text');
-        const cleanToken = paste.replace(/[^a-zA-Z0-9]/g, '').substring(0, 12);
-        e.target.value = cleanToken;
     }
 
     // ===== SUBMIT DO TOKEN =====
     async handleTokenSubmit() {
         const tokenInput = document.getElementById('tokenInput');
-        const token = tokenInput.value.trim();
+        const token = tokenInput.value.trim(); // NÃO converter para uppercase
 
         if (!token) {
             this.showError('Por favor, digite um token válido.');
             return;
         }
 
-        if (token.length < 8) {
-            this.showError('Token deve ter pelo menos 8 caracteres.');
+        if (token.length < 6) {
+            this.showError('Token deve ter pelo menos 6 caracteres.');
             return;
         }
 
+        console.log('Tentando validar token:', token);
         await this.validateToken(token);
     }
 
-    // ===== VALIDAÇÃO DO TOKEN =====
+    // ===== VALIDAÇÃO DO TOKEN COM SEU SISTEMA =====
     async validateToken(token) {
         this.showLoading('Validando seu token...');
 
         try {
-            // Simula busca no arquivo tokens.json
-            const response = await this.fetchWithRetry(this.tokenValidationUrl);
+            // Buscar no arquivo tokens.json (seu sistema Python)
+            const response = await fetch('tokens.json');
+            
+            if (!response.ok) {
+                throw new Error('Erro ao carregar arquivo de tokens');
+            }
+            
             const tokensData = await response.json();
-
+            
+            // Procurar o token no objeto JSON (busca exata)
             const clientData = tokensData[token];
 
             if (!clientData) {
+                console.log('Token não encontrado:', token);
+                console.log('Tokens disponíveis:', Object.keys(tokensData));
                 throw new Error('Token não encontrado');
             }
 
@@ -121,28 +103,41 @@ class AuthSystem {
             const now = new Date();
             const expirationDate = new Date(clientData.expira_em);
             
+            console.log('Data atual:', now);
+            console.log('Data de expiração:', expirationDate);
+            
             if (now > expirationDate) {
                 throw new Error('Token expirado');
             }
 
+            // Converter dados para formato do sistema
+            const clienteFormatado = {
+                token: token,
+                cliente: clientData.cliente,
+                categoria: clientData.categoria,
+                pasta: clientData.pasta,
+                expira_em: clientData.expira_em,
+                criado_em: clientData.criado_em,
+                downloads_permitidos: clientData.downloads_permitidos,
+                fotos_baixadas: clientData.fotos_baixadas || []
+            };
+
+            console.log('Token válido para cliente:', clienteFormatado);
+
             // Token válido
-            await this.handleSuccessfulAuth(token, clientData);
+            await this.handleSuccessfulAuth(token, clienteFormatado);
 
         } catch (error) {
             console.error('Erro na validação:', error);
-            await this.handleAuthError(error.message);
+            this.handleAuthError(error.message);
         }
     }
 
     // ===== AUTENTICAÇÃO BEM-SUCEDIDA =====
     async handleSuccessfulAuth(token, clientData) {
-        this.currentToken = token;
-        this.clientData = clientData;
+        this.tokenValido = token;
+        this.clienteData = clientData;
         this.isAuthenticated = true;
-        this.retryAttempts = 0;
-
-        // Registrar acesso
-        await this.registerAccess(token);
 
         // Salvar na sessão
         sessionStorage.setItem('authToken', token);
@@ -151,93 +146,61 @@ class AuthSystem {
         // Atualizar URL sem token
         this.updateUrlWithoutToken();
 
+        // Também registrar download no sistema (se necessário)
+        this.registrarAcesso(token);
+
         // Mostrar galeria
         this.showGallery();
 
-        // Notificar sucesso
-        this.showNotification('Login realizado com sucesso!', 'success');
+        // Notificar sucesso com informações do token
+        const diasRestantes = Math.ceil((new Date(clientData.expira_em) - new Date()) / (1000 * 60 * 60 * 24));
+        this.showNotification(`Bem-vindo ${clientData.cliente}! Token válido por ${diasRestantes} dias.`, 'success');
+    }
+
+    // ===== REGISTRAR ACESSO =====
+    async registrarAcesso(token) {
+        try {
+            // Em um ambiente real, enviaria para o servidor
+            const accessData = {
+                token: token,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+
+            console.log('Acesso registrado:', accessData);
+            
+            // Salvar localmente para demonstração
+            const acessos = JSON.parse(localStorage.getItem('acessos_tokens') || '[]');
+            acessos.push(accessData);
+            localStorage.setItem('acessos_tokens', JSON.stringify(acessos));
+
+        } catch (error) {
+            console.warn('Erro ao registrar acesso:', error);
+        }
     }
 
     // ===== ERRO DE AUTENTICAÇÃO =====
-    async handleAuthError(errorMessage) {
-        this.retryAttempts++;
-
-        let userMessage = 'Token inválido ou expirado.';
+    handleAuthError(errorMessage) {
+        let userMessage = 'Token inválido. Verifique se digitou corretamente.';
         
         if (errorMessage.includes('não encontrado')) {
-            userMessage = 'Token não encontrado. Verifique se digitou corretamente.';
+            userMessage = 'Token não encontrado. Verifique com Gabriel se o token está correto.';
         } else if (errorMessage.includes('expirado')) {
-            userMessage = 'Token expirado. Solicite um novo token ao fotógrafo.';
+            userMessage = 'Token expirado. Entre em contato com Gabriel para renovar o acesso.';
         } else if (errorMessage.includes('desativado')) {
-            userMessage = 'Token desativado. Entre em contato conosco.';
-        } else if (errorMessage.includes('network') || errorMessage.includes('fetch')) {
+            userMessage = 'Token desativado. Entre em contato com Gabriel.';
+        } else if (errorMessage.includes('fetch')) {
             userMessage = 'Erro de conexão. Verifique sua internet e tente novamente.';
-        }
-
-        if (this.retryAttempts >= this.maxRetries) {
-            userMessage += ' Muitas tentativas falharam. Entre em contato conosco.';
         }
 
         this.showErrorScreen(userMessage);
     }
 
-    // ===== REGISTRAR ACESSO =====
-    async registerAccess(token) {
-        try {
-            // Em um ambiente real, isso seria uma chamada para API
-            // Aqui simularemos o registro local
-            const accessData = {
-                token: token,
-                timestamp: new Date().toISOString(),
-                userAgent: navigator.userAgent,
-                ip: 'unknown' // Em produção, seria obtido do servidor
-            };
-
-            console.log('Acesso registrado:', accessData);
-
-            // Simular envio para servidor
-            // await fetch('/api/register-access', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify(accessData)
-            // });
-
-        } catch (error) {
-            console.warn('Erro ao registrar acesso:', error);
-            // Não bloquear o login por erro de log
-        }
-    }
-
-    // ===== FETCH COM RETRY =====
-    async fetchWithRetry(url, options = {}, retries = 3) {
-        for (let i = 0; i < retries; i++) {
-            try {
-                const response = await fetch(url, options);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                return response;
-            } catch (error) {
-                console.warn(`Tentativa ${i + 1} falhou:`, error);
-                
-                if (i === retries - 1) {
-                    throw error;
-                }
-                
-                // Aguardar antes de tentar novamente
-                await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-            }
-        }
-    }
-
     // ===== LOGOUT =====
     logout() {
-        this.currentToken = null;
-        this.clientData = null;
+        this.tokenValido = null;
+        this.clienteData = null;
         this.isAuthenticated = false;
-        this.retryAttempts = 0;
 
         // Limpar sessão
         sessionStorage.removeItem('authToken');
@@ -259,50 +222,23 @@ class AuthSystem {
 
         if (savedToken && savedClientData) {
             try {
-                this.currentToken = savedToken;
-                this.clientData = JSON.parse(savedClientData);
+                this.tokenValido = savedToken;
+                this.clienteData = JSON.parse(savedClientData);
                 this.isAuthenticated = true;
-
-                // Validar se ainda está válido
-                this.validateSavedSession();
+                this.showGallery();
             } catch (error) {
                 console.warn('Erro ao recuperar sessão:', error);
                 this.clearSession();
+                this.showLoginScreen();
             }
-        }
-    }
-
-    async validateSavedSession() {
-        try {
-            const response = await fetch(this.tokenValidationUrl);
-            const tokensData = await response.json();
-            const currentData = tokensData[this.currentToken];
-
-            if (!currentData || !currentData.ativo) {
-                throw new Error('Sessão inválida');
-            }
-
-            const now = new Date();
-            const expirationDate = new Date(currentData.expira_em);
-            
-            if (now > expirationDate) {
-                throw new Error('Sessão expirada');
-            }
-
-            // Sessão válida
-            this.showGallery();
-        } catch (error) {
-            console.warn('Sessão inválida:', error);
-            this.clearSession();
-            this.showLoginScreen();
         }
     }
 
     clearSession() {
         sessionStorage.removeItem('authToken');
         sessionStorage.removeItem('clientData');
-        this.currentToken = null;
-        this.clientData = null;
+        this.tokenValido = null;
+        this.clienteData = null;
         this.isAuthenticated = false;
     }
 
@@ -349,8 +285,8 @@ class AuthSystem {
         this.updateClientInfo();
 
         // Carregar fotos
-        if (window.galleryManager) {
-            window.galleryManager.loadPhotos(this.clientData);
+        if (window.galeriaSimples) {
+            window.galeriaSimples.loadPhotos(this.clienteData);
         }
     }
 
@@ -375,17 +311,17 @@ class AuthSystem {
 
     // ===== ATUALIZAR INFO DO CLIENTE =====
     updateClientInfo() {
-        if (!this.clientData) return;
+        if (!this.clienteData) return;
 
         const clientName = document.getElementById('clientName');
         const clientCategory = document.getElementById('clientCategory');
 
         if (clientName) {
-            clientName.textContent = this.clientData.cliente;
+            clientName.textContent = this.clienteData.cliente;
         }
 
         if (clientCategory) {
-            clientCategory.textContent = this.clientData.categoria;
+            clientCategory.textContent = this.clienteData.categoria;
         }
     }
 
@@ -401,22 +337,37 @@ class AuthSystem {
     }
 
     showNotification(message, type = 'info') {
-        // Usar sistema de notificações global se disponível
-        if (window.notificationManager) {
-            window.notificationManager.show(message, type);
-        } else {
-            // Fallback para alert
-            alert(message);
-        }
+        // Sistema de notificação simples
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 10000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 4000);
     }
 
     // ===== GETTERS =====
     getToken() {
-        return this.currentToken;
+        return this.tokenValido;
     }
 
     getClientData() {
-        return this.clientData;
+        return this.clienteData;
     }
 
     isUserAuthenticated() {
@@ -425,19 +376,16 @@ class AuthSystem {
 }
 
 // ===== INICIALIZAÇÃO =====
-let authSystem;
+let authSimples;
 
 document.addEventListener('DOMContentLoaded', () => {
-    authSystem = new AuthSystem();
+    authSimples = new AuthSimples();
     
     // Verificar sessão existente
-    authSystem.checkExistingSession();
+    authSimples.checkExistingSession();
     
     // Tornar disponível globalmente
-    window.authSystem = authSystem;
+    window.authSimples = authSimples;
+    
+    console.log('🔐 Sistema de autenticação simples inicializado');
 });
-
-// ===== EXPORT PARA MÓDULOS =====
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = AuthSystem;
-}
