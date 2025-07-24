@@ -93,7 +93,6 @@ class GaleriaSimples {
                         url: foto.url,
                         thumbnailUrl: foto.thumbnail || foto.url,
                         previewUrl: foto.url,
-                        size: foto.tamanho || '2.5 MB',
                         dateFormatted: foto.data || new Date().toLocaleDateString('pt-BR'),
                         pasta: clientData.pasta
                     }));
@@ -123,7 +122,6 @@ class GaleriaSimples {
                                 url: urlFoto.trim(),
                                 thumbnailUrl: urlFoto.trim(),
                                 previewUrl: urlFoto.trim(),
-                                size: '2.5 MB',
                                 dateFormatted: new Date().toLocaleDateString('pt-BR'),
                                 pasta: pasta.trim()
                             });
@@ -231,7 +229,6 @@ class GaleriaSimples {
                 <div class="photo-name">${photo.name}</div>
                 <div class="photo-meta">
                     <span class="photo-date">${photo.dateFormatted}</span>
-                    <span class="photo-size">${photo.size}</span>
                 </div>
             </div>
         `;
@@ -288,7 +285,6 @@ class GaleriaSimples {
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-30deg);
                 font-family: 'Playfair Display', serif;
-                font-size: min(4vw, 2rem);
                 font-weight: 700;
                 color: rgba(212, 175, 55, 0.3);
                 white-space: nowrap;
@@ -382,7 +378,6 @@ class GaleriaSimples {
 
         document.getElementById('modalPhotoName').textContent = photo.name;
         document.getElementById('modalImage').src = photo.previewUrl;
-        document.getElementById('photoSize').textContent = photo.size;
         document.getElementById('photoDate').textContent = photo.dateFormatted;
         
         document.getElementById('photoCounter').textContent = 
