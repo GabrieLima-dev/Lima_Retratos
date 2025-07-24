@@ -232,7 +232,7 @@
 }
 
 .view-btn {
-    padding: 10px 15px;
+    padding: 10px 40px;
     border: 2px solid var(--border-color);
     background: transparent;
     color: var(--text-secondary);
@@ -241,7 +241,7 @@
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 }
 
 .view-btn.active,
