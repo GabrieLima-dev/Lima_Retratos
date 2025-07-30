@@ -10,8 +10,8 @@
     --primary-color: #D4AF37;
     --primary-dark: #B8941F;
     --secondary-color: #2C2C2C;
-    --text-primary: #1A1A1A;
-    --text-secondary: #666666;
+    --text-primary: #000000;
+    --text-secondary: #ffffff;
     --text-light: #999999;
     --white: #FFFFFF;
     --light-gray: #F8F9FA;
@@ -25,7 +25,7 @@
     --overlay-dark: rgba(0, 0, 0, 0.7);
     --overlay-green: rgba(212, 175, 55, 0.9);
     --glass-bg: rgba(255, 255, 255, 0.9);
-    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-border: rgba(212, 175, 55, 0.095);
     
     /* Backgrounds Light */
     --dark-bg: var(--kraft-bg);
@@ -36,7 +36,7 @@
     /* Gradientes Light */
     --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     --gradient-dark: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
-    --gradient-overlay: linear-gradient(45deg, rgba(212, 175, 55, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
+    --gradient-overlay: linear-gradient(45deg, rgba(212, 175, 55, 0.064) 0%, rgba(0, 0, 0, 0.6) 100%);
     
     /* Tipografia */
     --font-primary: 'Playfair Display', serif;
@@ -44,7 +44,7 @@
 
     /* Espaçamentos */
     --container-max-width: 1200px;
-    --section-padding: 120px 0;
+    --section-padding: 70px 0;
     --border-radius: 12px;
     --border-radius-lg: 20px;
 
@@ -85,7 +85,7 @@
     /* Gradientes Dark */
     --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     --gradient-dark: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
-    --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+    --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.064) 0%, rgba(13, 17, 23, 0.8) 100%);
     
     /* Efeitos Dark */
     --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -169,7 +169,7 @@
         /* Gradientes Dark */
         --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
         --gradient-dark: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
-        --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+        --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.064) 0%, rgba(13, 17, 23, 0.8) 100%);
         
         /* Efeitos Dark */
         --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -269,7 +269,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-secondary);
     font-size: 14px;
     font-weight: 600;
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     text-transform: uppercase;
     letter-spacing: 3px;
     display: block;
@@ -294,7 +294,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-primary);
     margin-bottom: 25px;
     font-weight: 700;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary-light) 100%);
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -302,7 +302,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .section-description {
     font-size: 18px;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     line-height: 1.8;
     max-width: 600px;
     margin: 0 auto;
@@ -406,8 +406,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-img {
-    width: 45px;
-    height: 45px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     filter: brightness(1.2);
 }
@@ -416,8 +416,8 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
     font-size: 22px;
     font-weight: 700;
-    color: var(--text-primary);
-    background: var(--gradient-primary);
+    color: var(--text-secondary);
+    background: #ffffff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -452,7 +452,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--text-primary);
+    color: var(--white);
 }
 
 .nav-link:hover::after,
@@ -523,7 +523,7 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
 }
 
 .carousel-item.active {
@@ -535,7 +535,7 @@ h1, h2, h3, h4, h5, h6 {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: brightness(0.7) saturate(1.1);
+    filter: brightness(1) saturate(1);
 }
 
 .carousel-overlay {
@@ -668,11 +668,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-scroll {
     position: absolute;
-    bottom: 50px;
+    bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 14px;
     animation: bounce 2s infinite;
     z-index: 4;
@@ -682,7 +682,7 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     margin-top: 10px;
     font-size: 18px;
-    color: var(--accent-emerald);
+    color: var(--primary-color);
 }
 
 /* ===== ESPAÇADOR PARA CONTEÚDO ===== */
@@ -742,25 +742,6 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(-2px);
 }
 
-.phone-mockup {
-    position: relative;
-    width: 280px;
-    height: 560px;
-    background: var(--dark-bg);
-    border-radius: 40px;
-    padding: 20px;
-    box-shadow: var(--shadow);
-    border: 3px solid var(--dark-tertiary);
-}
-
-.phone-screen {
-    width: 100%;
-    height: 100%;
-    background: var(--dark-tertiary);
-    border-radius: 30px;
-    overflow: hidden;
-    position: relative;
-}
 
 .instagram-header {
     background: var(--dark-bg);
@@ -904,7 +885,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .video-category {
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -920,7 +901,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .video-description {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     font-size: 14px;
     line-height: 1.6;
 }
@@ -1145,7 +1126,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-card p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin-bottom: 30px;
     line-height: 1.7;
     font-size: 16px;
@@ -1157,7 +1138,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .service-card li {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin-bottom: 12px;
     position: relative;
     padding-left: 30px;
@@ -1189,7 +1170,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .about-text p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin-bottom: 25px;
     font-size: 18px;
     line-height: 1.8;
@@ -1205,7 +1186,7 @@ h1, h2, h3, h4, h5, h6 {
 .stat {
     text-align: center;
     padding: 25px;
-    background: var(--glass-bg);
+    background: var(--glass-border);
     border-radius: var(--border-radius);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
@@ -1223,9 +1204,9 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-primary);
     font-size: 42px;
     font-weight: 700;
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     margin-bottom: 8px;
-    background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--primary-light) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-color) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1233,7 +1214,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .stat-label {
     font-size: 14px;
-    color: var(--text-secondary);
+    color: var(--primary-color);
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: 600;
@@ -1319,13 +1300,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .contact-details p {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     margin-bottom: 10px;
     font-size: 16px;
 }
 
 .contact-link {
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
