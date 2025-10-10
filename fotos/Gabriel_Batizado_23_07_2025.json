@@ -1,0 +1,82 @@
+[
+  {
+    "nome": "Entrada da igreja - Família reunida",
+    "album": "Cerimônia na Igreja Matriz",
+    "data": "2025-07-12",
+    "descricao": "Pais e padrinhos aguardando na entrada principal da igreja.",
+    "url": "https://images.pexels.com/photos/613402/pexels-photo-613402.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/613402/pexels-photo-613402.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Batizado - Água na pia batismal",
+    "album": "Cerimônia na Igreja Matriz",
+    "data": "2025-07-12",
+    "descricao": "Momento da bênção com a criança no colo do padrinho.",
+    "url": "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Retrato com os padrinhos",
+    "album": "Cerimônia na Igreja Matriz",
+    "data": "2025-07-12",
+    "descricao": "Close carinhoso dos padrinhos segurando o bebê após a bênção.",
+    "url": "https://images.pexels.com/photos/1444443/pexels-photo-1444443.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/1444443/pexels-photo-1444443.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Família no jardim",
+    "album": "Ensaio Pós-Cerimônia no Jardim Botânico",
+    "data": "2025-07-13",
+    "descricao": "Pais brincando com a criança ao ar livre logo após a cerimônia.",
+    "url": "https://images.pexels.com/photos/1661810/pexels-photo-1661810.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/1661810/pexels-photo-1661810.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Detalhes do batizado",
+    "album": "Ensaio Pós-Cerimônia no Jardim Botânico",
+    "data": "2025-07-13",
+    "descricao": "Close na concha de prata e vela personalizados do batizado.",
+    "url": "https://images.pexels.com/photos/1049297/pexels-photo-1049297.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/1049297/pexels-photo-1049297.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Brincadeira com bolhas de sabão",
+    "album": "Ensaio Pós-Cerimônia no Jardim Botânico",
+    "data": "2025-07-13",
+    "descricao": "Criança sorrindo enquanto os padrinhos fazem bolhas ao redor.",
+    "url": "https://images.pexels.com/photos/1574653/pexels-photo-1574653.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/1574653/pexels-photo-1574653.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Retrato clássico em estúdio",
+    "album": "Sessão Fine Art em Estúdio",
+    "data": "2025-07-18",
+    "descricao": "Retrato formal com iluminação suave destacando a família.",
+    "url": "https://images.pexels.com/photos/3770588/pexels-photo-3770588.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/3770588/pexels-photo-3770588.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Detalhes do vestido e batina",
+    "album": "Sessão Fine Art em Estúdio",
+    "data": "2025-07-18",
+    "descricao": "Close nos detalhes do tecido e acessórios usados na sessão.",
+    "url": "https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/346796/pexels-photo-346796.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Retrato com avós",
+    "album": "Sessão Fine Art em Estúdio",
+    "data": "2025-07-18",
+    "descricao": "Registro multi-gerações com foco na conexão familiar.",
+    "url": "https://images.pexels.com/photos/755167/pexels-photo-755167.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/755167/pexels-photo-755167.jpeg?auto=compress&cs=tinysrgb&w=400"
+  },
+  {
+    "nome": "Retrato com avós",
+    "album": "Sessão 2",
+    "data": "2025-07-18",
+    "descricao": "Registro multi-gerações com foco na conexão familiar.",
+    "url": "https://images.pexels.com/photos/755167/pexels-photo-755167.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    "thumbnail": "https://images.pexels.com/photos/755167/pexels-photo-755167.jpeg?auto=compress&cs=tinysrgb&w=400"
+  }
+]

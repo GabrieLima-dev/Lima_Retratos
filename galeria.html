@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área do Cliente - Gabriel Lima Retratos</title>
+    <meta name="description" content="Área exclusiva para clientes visualizarem e baixarem suas fotos.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/galeria.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="assets/favicon.png" alt="Gabriel Lima Retratos" class="logo-img">
+                    <span class="logo-text">Gabriel Lima Retratos</span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="./index.html" class="nav-link">← Voltar ao Site</a></li>
+                    <li><a href="#" class="nav-link" id="logoutBtn">Sair</a></li>
+                </ul>
+                
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2>Carregando suas fotos...</h2>
+            <p>Aguarde um momento enquanto preparamos sua galeria</p>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="assets/favicon.png" alt="Gabriel Lima Retratos" class="login-logo">
+                <h1>Área do Cliente</h1>
+                <p>Acesse suas fotos com o token enviado por WhatsApp</p>
+            </div>
+            
+            <form id="tokenForm" class="token-form">
+                <div class="form-group">
+                    <label for="tokenInput">Token de Acesso</label>
+                    <input type="text" id="tokenInput" placeholder="Ex: 6f5ef5fe-299" required maxlength="15">
+                    <small>O token foi enviado para você via WhatsApp</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-key"></i>
+                    Acessar Galeria
+                </button>
+            </form>
+            
+            <div class="login-help">
+                <p>Não recebeu seu token?</p>
+                <a href="https://wa.me/5579981338664?text=Olá Gabriel, não recebi meu token de acesso às fotos" 
+                   target="_blank" class="help-link">
+                    <i class="fab fa-whatsapp"></i>
+                    Falar com Gabriel
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Screen -->
+    <div id="errorScreen" class="error-screen" style="display: none;">
+        <div class="error-container">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h2>Acesso Negado</h2>
+            <p id="errorMessage">Token inválido ou expirado</p>
+            <button id="tryAgainBtn" class="btn btn-primary">
+                <i class="fas fa-redo"></i>
+                Tentar Novamente
+            </button>
+        </div>
+    </div>
+
+    <!-- Client Info -->
+    <div id="clientInfo" class="client-info" style="display: none;">
+        <div class="container">
+            <div class="client-header">
+                <div class="client-welcome">
+                    <h1>Olá, <span id="clientName">Cliente</span>!</h1>
+                    <p>Suas fotos estão prontas</p>
+                </div>
+                <div class="client-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalPhotos">0</span>
+                        <span class="stat-label">Fotos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="downloadedPhotos">0</span>
+                        <span class="stat-label">Baixadas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gallery Controls -->
+    <div id="galleryControls" class="gallery-controls" style="display: none;">
+        <div class="container">
+            <div class="controls-header">
+                <div class="view-options">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                        Grade
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                        Lista
+                    </button>
+                    <button class="view-btn" data-view="albums">
+                        <i class="fas fa-images"></i>
+                        Álbuns
+                    </button>
+                </div>
+                
+                <div class="gallery-actions">
+                    <button id="selectAllBtn" class="btn btn-secondary">
+                        <i class="fas fa-check-double"></i>
+                        Selecionar Todas
+                    </button>
+                    <button id="downloadSelectedBtn" class="btn btn-primary" disabled>
+                        <i class="fas fa-download"></i>
+                        Baixar Selecionadas (<span id="selectedCount">0</span>)
+                    </button>
+                </div>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Buscar por foto ou álbum...">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <div class="album-filters" id="albumFilters">
+                <!-- Controles adicionais de álbum serão carregados dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Gallery -->
+    <div id="photoGallery" class="photo-gallery" style="display: none;">
+        <div class="container">
+            <div id="galleryGrid" class="gallery-grid">
+                <!-- Fotos serão carregadas dinamicamente -->
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fas fa-images"></i>
+                <h3>Nenhuma foto encontrada</h3>
+                <p>Não foram encontradas fotos correspondentes à sua busca.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photoModal" class="photo-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalPhotoName">Nome da Foto</h3>
+                <div class="modal-actions">
+                    <button id="downloadSingleBtn" class="btn btn-primary">
+                        <i class="fas fa-download"></i>
+                        Baixar
+                    </button>
+                    <button id="closeModalBtn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <img id="modalImage" src="" alt="">
+                <div class="modal-info">
+                    <p><strong>Tamanho:</strong> <span id="photoSize">-</span></p>
+                    <p><strong>Data:</strong> <span id="photoDate">-</span></p>
+                </div>
+            </div>
+            
+            <div class="modal-navigation">
+                <button id="prevPhotoBtn" class="nav-btn">
+                    <i class="fas fa-chevron-left"></i>
+                    Anterior
+                </button>
+                <span id="photoCounter">1 de 10</span>
+                <button id="nextPhotoBtn" class="nav-btn">
+                    Próxima
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts Simplificados -->
+    <script src="./JS/auth.js"></script>
+    <script src="./JS/galeria.js"></script>
+</body>
+</html>

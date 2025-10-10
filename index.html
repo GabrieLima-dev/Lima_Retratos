@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Lima Retratos - Fotografia Profissional</title>
+    <meta name="description" content="Fotógrafo profissional especializado em batizados, missas e ensaios de gestantes. Momentos únicos capturados com elegância e sensibilidade.">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./assets/favicon.png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="assets/favicon.png" alt="Gabriel Lima Retratos" class="logo-img">
+                    <span class="logo-text">Gabriel Lima Retratos</span>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li><a href="#home" class="nav-link">Início</a></li>
+                    <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+                    <li><a href="#videos" class="nav-link">Vídeos</a></li>
+                    <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                    <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                    <li><a href="#contato" class="nav-link">Contato</a></li>
+                    <li><a href="galeria.html" class="nav-link special">Área do Cliente</a></li>
+                </ul>
+                
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema">
+        <i class="fas fa-moon icon dark-icon"></i>
+        <i class="fas fa-sun icon light-icon"></i>
+    </button>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- Hero Carousel -->
+        <div class="hero-carousel">
+            <div class="carousel-item active">
+                <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80" alt="Casamento">
+                <div class="carousel-overlay"></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1544717440-50301b8a9ea8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80" alt="Batizado">
+                <div class="carousel-overlay"></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80" alt="Gestante">
+                <div class="carousel-overlay"></div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d4893c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80" alt="Família">
+                <div class="carousel-overlay"></div>
+            </div>
+        </div>
+
+        <!-- Carousel Navigation -->
+        <div class="carousel-nav">
+            <button class="carousel-btn prev-btn" aria-label="Imagem anterior">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-btn next-btn" aria-label="Próxima imagem">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <button class="indicator active" data-slide="0"></button>
+            <button class="indicator" data-slide="1"></button>
+            <button class="indicator" data-slide="2"></button>
+            <button class="indicator" data-slide="3"></button>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <div class="elegant-message">
+                <p>Capturando a essência de cada momento especial com delicadeza e arte.</p>
+                <span class="signature">Gabriel Lima</span>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="hero-scroll">
+            <span>Role para baixo</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Content Spacer -->
+    <div class="content-spacer"></div>
+
+    <!-- Videos Section -->
+    <section id="videos" class="videos-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Audiovisual</span>
+                <h2 class="section-title">Vídeos</h2>
+                <p class="section-description">
+                    Capturando momentos em movimento com a mesma sensibilidade e técnica das fotografias.
+                </p>
+            </div>
+
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1544717440-50301b8a9ea8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Batizado">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Batizados</div>
+                        <h3 class="video-title">Batizado da Sofia</h3>
+                        <p class="video-description">Um momento sagrado capturado em toda sua emoção e significado.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Gestante">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Gestantes</div>
+                        <h3 class="video-title">Ensaio da Mariana</h3>
+                        <p class="video-description">A beleza da maternidade em movimento, capturada com delicadeza.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1473691955023-da1c49c95c78?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Drone">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Imagens Aéreas</div>
+                        <h3 class="video-title">Vista Aérea - Cerimônia</h3>
+                        <p class="video-description">Perspectivas únicas capturadas com drone para uma visão completa.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Missa">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Celebrações</div>
+                        <h3 class="video-title">Primeira Comunhão</h3>
+                        <p class="video-description">Momentos de fé e tradição registrados com respeito e discrição.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d4893c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Família">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Família</div>
+                        <h3 class="video-title">Ensaio Familiar</h3>
+                        <p class="video-description">A conexão e amor familiar capturados em movimento natural.</p>
+                    </div>
+                </div>
+
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Vídeo Making Of">
+                        <div class="video-overlay">
+                            <button class="play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <div class="video-category">Bastidores</div>
+                        <h3 class="video-title">Bastidores do Ensaio</h3>
+                        <p class="video-description">Um olhar por trás das câmeras durante um ensaio especial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Meu Trabalho</span>
+                <h2 class="section-title">Portfolio</h2>
+                <p class="section-description">
+                    Uma seleção dos momentos mais especiais que tive o privilégio de fotografar.
+                </p>
+            </div>
+
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="batizados">Batizados</button>
+                <button class="filter-btn" data-filter="gestantes">Gestantes</button>
+                <button class="filter-btn" data-filter="missas">Missas</button>
+            </div>
+
+            <div class="portfolio-grid">
+                <div class="portfolio-item" data-category="batizados">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1544717440-50301b8a9ea8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Batizado">
+                        <div class="portfolio-overlay">
+                            <h3>Batizado de Sofia</h3>
+                            <p>Um momento sagrado eternizado</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="gestantes">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gestante">
+                        <div class="portfolio-overlay">
+                            <h3>Ensaio da Mariana</h3>
+                            <p>A beleza da maternidade</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="missas">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Missa">
+                        <div class="portfolio-overlay">
+                            <h3>Primeira Comunhão</h3>
+                            <p>Momentos de fé e tradição</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="gestantes">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1555252333-9f8e92e65df9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gestante">
+                        <div class="portfolio-overlay">
+                            <h3>Expecting Joy</h3>
+                            <p>A espera mais bonita</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="batizados">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1519340333755-56e9c1d4893c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Batizado">
+                        <div class="portfolio-overlay">
+                            <h3>Batizado do Miguel</h3>
+                            <p>Bênçãos e alegria familiar</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item" data-category="missas">
+                    <div class="portfolio-image">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Missa">
+                        <div class="portfolio-overlay">
+                            <h3>Celebração de Fé</h3>
+                            <p>Momentos sagrados</p>
+                            <button class="view-btn"><i class="fas fa-search-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Section -->
+    <section id="servicos" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">O que Ofereço</span>
+                <h2 class="section-title">Serviços</h2>
+                <p class="section-description">
+                    Especializado em capturar os momentos mais importantes da sua vida
+                </p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Batizados</h3>
+                    <p>Registro completo do batizado do seu filho, desde a preparação até a celebração com a família.</p>
+                    <ul>
+                        <li>Cobertura completa da cerimônia</li>
+                        <li>Fotos da família</li>
+                        <li>Detalhes da decoração</li>
+                        <li>Galeria online protegida</li>
+                    </ul>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="service-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Ensaio Gestante</h3>
+                    <p>Eternize a beleza da maternidade com um ensaio único e personalizado para este momento especial.</p>
+                    <ul>
+                        <li>Ensaio externo</li>
+                        <li>Várias poses e cenários</li>
+                        <li>Edição profissional</li>
+                        <li>Fotos em alta resolução</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-church"></i>
+                    </div>
+                    <h3>Missas Especiais</h3>
+                    <p>Documentação de missas de primeira comunhão, crisma e outras celebrações religiosas importantes.</p>
+                    <ul>
+                        <li>Cobertura discreta</li>
+                        <li>Momentos solenes</li>
+                        <li>Interação familiar</li>
+                        <li>Entrega rápida</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3>Vídeos</h3>
+                    <p>Captura em movimento dos seus momentos especiais com a mesma qualidade e sensibilidade das fotografias.</p>
+                    <ul>
+                        <li>Filmagem em 4K</li>
+                        <li>Edição cinematográfica</li>
+                        <li>Trilha sonora personalizada</li>
+                        <li>Entrega em múltiplos formatos</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-helicopter"></i>
+                    </div>
+                    <h3>Imagens Aéreas</h3>
+                    <p>Perspectivas únicas e panorâmicas usando drone para uma visão completa dos seus eventos.</p>
+                    <ul>
+                        <li>Drone profissional</li>
+                        <li>Imagens em alta resolução</li>
+                        <li>Perspectivas únicas</li>
+                        <li>Vídeos aéreos disponíveis</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Ensaios Familiares</h3>
+                    <p>Registre a união e amor da sua família em um ensaio natural e descontraído.</p>
+                    <ul>
+                        <li>Ambiente natural</li>
+                        <li>Poses espontâneas</li>
+                        <li>Incluindo pets</li>
+                        <li>Várias gerações</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <span class="section-subtitle">Conheça o Fotógrafo</span>
+                    <h2 class="section-title">Gabriel Lima</h2>
+                    <p>
+                        Com mais de 5 anos de experiência em fotografia, sou especializado em capturar 
+                        momentos únicos e emocionantes de batizados, ensaios de gestantes e celebrações 
+                        religiosas em Aracaju e região.
+                    </p>
+                    <p>
+                        Acredito que cada momento é precioso e merece ser eternizado com sensibilidade 
+                        e técnica profissional. Meu objetivo é criar imagens que contem a história 
+                        dos seus momentos mais especiais.
+                    </p>
+                    <p>
+                        Além da fotografia, também ofereço serviços de filmagem e captação de imagens aéreas, 
+                        proporcionando uma cobertura completa e única dos seus eventos mais importantes.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <span class="stat-number">150+</span>
+                            <span class="stat-label">Ensaios Realizados</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">80+</span>
+                            <span class="stat-label">Famílias Felizes</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Anos de Experiência</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gabriel Lima">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Section -->
+    <section id="contato" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Me conta seu projeto</span>
+                <h2 class="section-title">Entre em Contato</h2>
+                <p class="section-description">
+                    Pronto para eternizar seus momentos especiais?
+                </p>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>WhatsApp</h3>
+                            <p>+55 79 9 8133-8664</p>
+                            <a href="https://wa.me/5579981338664?text=Olá Gabriel, gostaria de contar um pouco mais sobre meu projeto." 
+                               class="contact-link" target="_blank">Enviar mensagem</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-instagram"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Instagram</h3>
+                            <p>@gabriellima_retratos</p>
+                            <a href="https://instagram.com/gabriellima_retratos" 
+                               class="contact-link" target="_blank">Seguir no Instagram</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Localização</h3>
+                            <p>Aracaju, Sergipe</p>
+                            <span class="contact-note">Atendo toda a região da grande Aracaju.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Seu WhatsApp">
+                        </div>
+                        <div class="form-group">
+                            <select id="service" name="service" required>
+                                <option value="">Tipo de serviço</option>
+                                <option value="batizado">Batizado</option>
+                                <option value="gestante">Ensaio Gestante</option>
+                                <option value="missa">Missa/Celebração</option>
+                                <option value="video">Vídeo</option>
+                                <option value="drone">Imagens Aéreas/Drone</option>
+                                <option value="familia">Ensaio Familiar</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Conte-me mais sobre seu projeto..." rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fab fa-whatsapp"></i>
+                            Enviar via WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 Gabriel Lima Retratos. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-content">
+            <span class="lightbox-close">&times;</span>
+            <img id="lightbox-image" src="" alt="">
+            <div class="lightbox-info">
+                <h3 id="lightbox-title"></h3>
+                <p id="lightbox-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="JS/main.js"></script>
+</body>
+</html>
