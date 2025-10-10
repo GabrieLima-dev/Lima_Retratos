@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const message = formData.get('message');
         
         // Validate form
-        if (!name || !email || !service || !message) {
+        if (!name || !email || !service) {
             showNotification('Por favor, preencha todos os campos obrigatórios.', 'error');
             return;
         }
@@ -370,17 +370,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createWhatsAppMessage(name, email, phone, service, message) {
-        return `Olá Gabriel! 📸
+        const sanitizedMessage = (message || '').trim();
+        const sanitizedPhone = (phone || '').trim();
 
-*Nome:* ${name}
-*E-mail:* ${email}
-${phone ? `*WhatsApp:* ${phone}` : ''}
-*Serviço:* ${service}
+        const lines = [
+            'Olá Gabriel!',
+            '',
+            `Nome: ${name}`,
+            `E-mail: ${email}`
+        ];
 
-*Mensagem:*
-${message}
+        if (sanitizedPhone) {
+            lines.push(`WhatsApp: ${sanitizedPhone}`);
+        }
 
-Gostaria de saber mais sobre seus serviços!`;
+        lines.push(`Serviço: ${service}`);
+
+        if (sanitizedMessage) {
+            lines.push('', 'Mensagem:', sanitizedMessage);
+        }
+
+        lines.push('', 'Gostaria de saber mais sobre seus serviços!');
+
+        return lines.join('\n');
     }
 
     // ===== VIDEO CARDS =====
@@ -900,17 +912,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createWhatsAppMessage(name, email, phone, service, message) {
-        return `Olá Gabriel! 📸
+        const sanitizedMessage = (message || '').trim();
+        const sanitizedPhone = (phone || '').trim();
 
-*Nome:* ${name}
-*E-mail:* ${email}
-${phone ? `*WhatsApp:* ${phone}` : ''}
-*Serviço:* ${service}
+        const lines = [
+            'Olá Gabriel!',
+            '',
+            `Nome: ${name}`,
+            `E-mail: ${email}`
+        ];
 
-*Mensagem:*
-${message}
+        if (sanitizedPhone) {
+            lines.push(`WhatsApp: ${sanitizedPhone}`);
+        }
 
-Gostaria de saber mais sobre seus serviços!`;
+        lines.push(`Serviço: ${service}`);
+
+        if (sanitizedMessage) {
+            lines.push('', 'Mensagem:', sanitizedMessage);
+        }
+
+        lines.push('', 'Gostaria de saber mais sobre seus serviços!');
+
+        return lines.join('\n');
     }
 
     // ===== VIDEO CARDS =====

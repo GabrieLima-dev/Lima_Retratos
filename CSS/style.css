@@ -137,6 +137,48 @@
     display: none;
 }
 
+/* ===== FLOATING WHATSAPP BUTTON ===== */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 60%), rgba(76, 175, 80, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(76, 175, 80, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 26px;
+    box-shadow: 0 18px 32px rgba(76, 175, 80, 0.35);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    z-index: 1000;
+    text-decoration: none;
+}
+
+.floating-whatsapp:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 22px 36px rgba(76, 175, 80, 0.45);
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.35), transparent 60%), rgba(76, 175, 80, 0.95);
+}
+
+.floating-whatsapp:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.4);
+}
+
+[data-theme="dark"] .floating-whatsapp {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 60%), rgba(76, 175, 80, 0.8);
+    border-color: rgba(76, 175, 80, 0.25);
+}
+
+[data-theme="dark"] .floating-whatsapp:hover {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), transparent 60%), rgba(76, 175, 80, 0.9);
+}
+
 /* ===== AUTO DARK MODE BASEADO NO SISTEMA ===== */
 @media (prefers-color-scheme: dark) {
     :root:not([data-theme]) {
@@ -377,7 +419,7 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 1000;
     background: rgba(13, 17, 23, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: none;
     transition: var(--transition);
 }
 
@@ -496,15 +538,12 @@ h1, h2, h3, h4, h5, h6 {
 /* ===== HERO SECTION APRIMORADO ===== */
 .hero {
     height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    z-index: -1;
 }
 
 .hero-carousel {
@@ -685,14 +724,6 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--accent-emerald);
 }
 
-/* ===== ESPAÇADOR PARA CONTEÚDO ===== */
-.content-spacer {
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-}
-
 /* ===== SEÇÃO INSTAGRAM ===== */
 .instagram-section {
     padding: 80px 0;
@@ -700,7 +731,6 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 100;
     border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
-    margin-top: 100vh;
 }
 
 .instagram-container {
@@ -1859,6 +1889,16 @@ h1, h2, h3, h4, h5, h6 {
 @media (prefers-color-scheme: dark) {
     .lightbox {
         background: rgba(0, 0, 0, 0.98);
+    }
+}
+
+@media (max-width: 600px) {
+    .floating-whatsapp {
+        bottom: 20px;
+        right: 20px;
+        width: 54px;
+        height: 54px;
+        font-size: 22px;
     }
 }
 
