@@ -9,7 +9,7 @@
 ![HTML5](https://img.shields.io/badge/HTML5-CSS3-orange)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-green)
 
-**Sistema profissional de galeria de fotos com autenticação por tokens, integração com BOX, marca d'água automática e design elegante.**
+**Sistema profissional de galeria de fotos com autenticação por tokens, integração com Google Drive, marca d'água automática e design elegante.**
 
 [📸 Ver Demo](https://gabriellima-retratos.github.io) • [📞 Contato](https://wa.me/5579981338664) • [📋 Documentação](#-instalação-e-configuração)
 
@@ -36,7 +36,7 @@
 
 ### 🔐 **Backend & Segurança**
 - ✅ Sistema de tokens únicos
-- ✅ Integração com BOX API
+- ✅ Integração com Google Drive API
 - ✅ Marca d'água automática
 - ✅ Downloads protegidos
 - ✅ Relatórios em Python
@@ -60,7 +60,7 @@ gabriel-lima-retratos/
 ├── 📁 js/
 │   ├── ⚡ main.js             # JavaScript principal
 │   ├── 🔐 auth.js             # Sistema de autenticação
-│   ├── 📦 box-api.js          # Integração com BOX
+│   ├── ☁️ Google Drive-api.js         # Integração com Google Drive API
 │   ├── 🖼️ watermark.js        # Sistema de marca d'água
 │   ├── 🖥️ galeria.js          # Controle da galeria
 │   └── ⚙️ config.js           # Configurações do sistema
@@ -102,23 +102,28 @@ photographer: {
 }
 ```
 
-### 2️⃣ **Configuração do BOX (Opcional)**
+### 2️⃣ **Configuração da Google Drive API**
 
 <details>
-<summary>📦 <strong>Clique para ver configuração do BOX</strong></summary>
+<summary>☁️ <strong>Clique para ver configuração da API do Google</strong></summary>
 
-1. **Crie uma conta** no [BOX Developer Console](https://developer.box.com/)
-2. **Crie uma nova aplicação** do tipo "Custom App"
-3. **Configure OAuth 2.0** e anote as credenciais
-4. **Atualize** `js/config.js`:
+1. **Acesse** o [Google Cloud Console](https://console.cloud.google.com/)
+2. **Crie um projeto** ou reutilize um existente
+3. **Ative** a Google Drive API em *APIs e serviços → Biblioteca*
+4. **Crie um Service Account** e gere a chave JSON
+5. **Compartilhe** a pasta "Ensaios" com o e-mail do service account
+6. **Atualize** `js/config.js` (ou seu arquivo de ambiente):
 
 ```javascript
-box: {
-    clientId: 'SEU_BOX_CLIENT_ID',
-    clientSecret: 'SEU_BOX_CLIENT_SECRET',
+googleDrive: {
+    clientEmail: 'service-account@seu-projeto.iam.gserviceaccount.com',
+    privateKey: '-----BEGIN PRIVATE KEY-----\\nSUA_CHAVE\\n-----END PRIVATE KEY-----\\n',
+    rootFolderId: 'SEU_ROOT_FOLDER_ID',
     enableMockData: false // Mudar para false em produção
 }
 ```
+
+> Também é possível apontar o caminho do JSON em `sync.config.json` para que o script Node use automaticamente as mesmas credenciais.
 
 </details>
 
@@ -176,7 +181,7 @@ npm run sync:albuns
 
 ### 👨‍💼 **Para o Fotógrafo**
 
-1. 📁 **Organize as fotos** no BOX por pastas de cliente
+1. 📁 **Organize as fotos** no Google Drive por pastas de cliente
 2. 🐍 **Execute**: `python main.py`
 3. 🎫 **Gere um token** com dados do cliente  
 4. 📱 **Envie o link** via WhatsApp
@@ -285,7 +290,7 @@ python main.py → Opção 3
 
 ```mermaid
 graph LR
-    A[📸 Ensaio] --> B[📁 Organizar BOX]
+    A[📸 Ensaio] --> B[📁 Organizar Google Drive]
     B --> C[🎫 Gerar Token] 
     C --> D[📱 Enviar WhatsApp]
     D --> E[🔐 Cliente Acessa]
@@ -393,7 +398,7 @@ development: {
 // 🚀 Produção (site live)
 development: {
     enableConsoleLogging: false,   // 🔇 Sem logs
-    enableMockData: false,         // 📦 Dados reais do BOX
+    enableMockData: false,         // ☁️ Dados reais do Google Drive
     showDebugInfo: false           // 🚫 Sem debug
 }
 ```
@@ -502,15 +507,15 @@ analytics: {
 <summary><strong>❌ Fotos não carregam</strong></summary>
 
 **Possíveis causas:**
-- 🔗 Conexão com BOX falhou
+- 🔗 Credenciais do Google Drive inválidas
 - 🌐 Problema de CORS
-- 📁 Pasta não encontrada
+- 📁 Pasta não compartilhada com o service account
 
 **Soluções:**
-1. Verificar configuração BOX em `config.js`
+1. Verificar configuração da Google Drive API em `config.js`
 2. Testar com `enableMockData: true`
 3. Verificar logs do console (F12)
-4. Confirmar permissões da pasta no BOX
+4. Confirmar permissões da pasta no Google Drive
 
 </details>
 
@@ -550,13 +555,13 @@ analytics: {
 <summary><strong>📥 Downloads falham</strong></summary>
 
 **Possíveis causas:**
-- 🔐 Permissões do BOX
+- 🔐 Compartilhamento do Google Drive incorreto
 - 🌐 URLs expiradas
 - 📶 Conexão instável
 
 **Soluções:**
-1. Verificar permissões no BOX
-2. Renovar tokens de acesso
+1. Verificar permissões no Google Drive
+2. Regenerar as URLs pelo sincronizador
 3. Testar conexão internet
 4. Verificar bloqueador de popup
 
@@ -595,7 +600,7 @@ development: {
 </div>
 
 ### **📚 Recursos Úteis**
-- 📖 **[BOX API Docs](https://developer.box.com/)** - Documentação oficial
+- 📖 **[Google Drive API Docs](https://developers.google.com/drive)** - Documentação oficial
 - 🐙 **[GitHub Issues](https://github.com/GabrieLima-dev/gabriel-lima-retratos/issues)** - Reportar bugs
 - 💬 **[Discussões](https://github.com/GabrieLima-dev/gabriel-lima-retratos/discussions)** - Perguntas e sugestões
 
@@ -754,21 +759,29 @@ development: {
 
 ---
 
-**💡 Dica Pro:** Use o modo `enableMockData: true` durante desenvolvimento para testar todas as funcionalidades sem precisar configurar o BOX inicialmente.
+**💡 Dica Pro:** Use o modo `enableMockData: true` durante desenvolvimento para testar todas as funcionalidades sem precisar configurar a API do Google Drive inicialmente.
 
 </div>
 
 ```json
 {
   "abc123def456": {
-    "cliente": "Maria Silva",
-    "categoria": "Gestantes",
-    "pasta": "Ensaio_Maria_Jan2024",
+    "cliente": "Gabriel Lima",
+    "categoria": "Outros",
+    "pasta": "Bento",
+    "pastas_permitidas": [
+      "Bento",
+      "GordinhoDeLuxo",
+      "almir",
+      "festaBidu",
+      "ordinals"
+    ],
+    "whatsapp": "557955555555",
     "downloads_permitidos": true,
     "fotos_baixadas": [],
     "acessos": [],
-    "criado_em": "2024-07-20T14:30:00.000Z",
-    "expira_em": "2024-08-19T14:30:00.000Z",
+    "criado_em": "2025-11-25T22:20:28.722235",
+    "expira_em": "2025-12-25T22:20:28.721914",
     "ativo": true
   }
 }
@@ -793,7 +806,7 @@ python relatorio.py
 ### **Fluxo de Trabalho:**
 
 1. **Fotógrafo** termina ensaio
-2. **Organiza fotos** no BOX por cliente
+2. **Organiza fotos** no Google Drive por cliente
 3. **Gera token** com dados do cliente
 4. **Envia link** via WhatsApp
 5. **Cliente acessa** com token
@@ -932,7 +945,7 @@ analytics: {
 ### **Problemas Comuns:**
 
 **❌ Fotos não carregam:**
-- Verifique conexão com BOX
+- Verifique conexão com Google Drive
 - Confirme configuração de CORS
 - Teste com dados mock primeiro
 
@@ -947,7 +960,7 @@ analytics: {
 - Teste em modo anônimo do navegador
 
 **❌ Downloads falham:**
-- Verifique permissões do BOX
+- Verifique permissões do Google Drive
 - Confirme URLs de download
 - Teste conexão de internet
 
@@ -968,7 +981,7 @@ development: {
 ### **Links Úteis:**
 - **WhatsApp**: +55 79 9 8133-8664
 - **Instagram**: @gabriellima_retratos
-- **BOX API Docs**: https://developer.box.com/
+- **Google Drive API**: https://developers.google.com/workspace/drive/api/guides/about-sdk?hl=pt-br
 - **GitHub Issues**: Para reportar bugs
 
 ### **Comunidade:**
@@ -1013,14 +1026,11 @@ Este sistema foi desenvolvido especificamente para **Gabriel Lima Retratos**.
 
 Este sistema oferece uma solução completa e profissional para fotógrafos que desejam:
 
-- **Proteger seu trabalho** com marca d'água
-- **Facilitar o acesso** dos clientes às fotos
-- **Automatizar a entrega** de galerias
-- **Manter controle total** sobre downloads
-- **Ter uma presença digital** elegante
-
-**Desenvolvido com ❤️ para Gabriel Lima Retratos**
+- **Facilitar o acesso** dos clientes às fotos.
+- **Automatizar a entrega** de galerias.
+- **Manter controle total** sobre downloads.
+- **Ter uma presença digital** elegante.
 
 ---
 
-*Última atualização: Julho 2024*
+*Última atualização: Novembro 2025*

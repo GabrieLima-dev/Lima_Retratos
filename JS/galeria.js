@@ -10,7 +10,7 @@ class GaleriaSimples {
         this.DEFAULT_ALBUM_NAME = 'Sem álbum';
         this.albumSummaries = [];
         this.albumToPhotos = new Map();
-        this.currentViewMode = 'grid'; // grid, list, albums
+        this.currentViewMode = 'albums'; // grid, list, albums (padrão em modo álbum)
         this.selectedAlbum = null;
         this.currentModalPhotos = [];
         this.photoIndexMap = new Map();
@@ -173,11 +173,12 @@ class GaleriaSimples {
             
             this.currentPhotos = fotosCliente;
             this.selectedAlbum = null;
-            this.currentViewMode = 'grid';
+            this.currentViewMode = 'albums';
             this.currentView = 'grid';
             this.selectedPhotos.clear();
             this.setModalPhotos([]);
             this.buildAlbumIndexes();
+            this.updateViewButtons();
             this.renderAlbumFilters();
             this.renderGallery();
             this.updateStats();
