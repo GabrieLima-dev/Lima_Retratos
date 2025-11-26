@@ -68,12 +68,22 @@ function resolveDescription(file, config) {
 }
 
 function buildUrl(file, config) {
-  if (config.urlTemplate) {
-    return config.urlTemplate.replace(/\{id\}/g, file.id);
+  const useDriveLinks = config.forceUrlTemplate !== true;
+
+  if (useDriveLinks) {
+    if (file.webContentLink) return file.webContentLink;
+    if (file.webViewLink) return file.webViewLink;
   }
-  if (file.webContentLink) return file.webContentLink;
-  if (file.webViewLink) return file.webViewLink;
-  return `https://drive.google.com/uc?id=${file.id}`;
+
+  if (config.urlTemplate) {
+    return config.urlTemplate
+      .replace(/\{id\}/g, file.id)
+      .replace(/\{resourceKey\}/g, file.resourceKey || '')
+      .replace(/\{name\}/g, encodeURIComponent(file.name || ''));
+  }
+
+  const baseUrl = `https://drive.google.com/uc?id=${file.id}`;
+  return file.resourceKey ? `${baseUrl}&resourcekey=${file.resourceKey}` : baseUrl;
 }
 
 function buildThumbnail(file, photoUrl, config) {
@@ -81,7 +91,9 @@ function buildThumbnail(file, photoUrl, config) {
   const strategy = thumbnailCfg.strategy || 'drive';
 
   if (strategy === 'template' && thumbnailCfg.template) {
-    return thumbnailCfg.template.replace(/\{id\}/g, file.id);
+    return thumbnailCfg.template
+      .replace(/\{id\}/g, file.id)
+      .replace(/\{resourceKey\}/g, file.resourceKey || '');
   }
 
   if (strategy === 'replace' && thumbnailCfg.search && thumbnailCfg.replace) {
@@ -152,7 +164,7 @@ async function listPhotos(drive, folderId, onlyImages) {
   do {
     const res = await drive.files.list({
       q: query,
-      fields: 'nextPageToken, files(id, name, description, createdTime, modifiedTime, thumbnailLink, webViewLink, webContentLink, properties, mimeType)',
+      fields: 'nextPageToken, files(id, name, description, createdTime, modifiedTime, thumbnailLink, webViewLink, webContentLink, properties, mimeType, resourceKey)',
       pageSize: 1000,
       pageToken
     });

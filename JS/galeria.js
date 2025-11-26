@@ -116,17 +116,22 @@ class GaleriaSimples {
                     }
 
                     const fotosData = await response.json();
-                    const fotosFormatadas = fotosData.map((foto, index) => ({
+                    const fotosFormatadas = fotosData.map((foto, index) => {
+                        const previewUrl = foto.preview || foto.thumbnail || foto.url || '';
+                        const thumbnailUrl = foto.thumbnail || foto.preview || foto.url || '';
+
+                        return {
                         id: `${pasta}_${index}`,
                         name: foto.nome || `foto_${index + 1}.jpg`,
                         url: foto.url,
-                        thumbnailUrl: foto.thumbnail || foto.url,
-                        previewUrl: foto.url,
+                        thumbnailUrl,
+                        previewUrl,
                         album: foto.album || this.DEFAULT_ALBUM_NAME,
                         description: foto.descricao || '',
                         dateFormatted: foto.data || new Date().toLocaleDateString('pt-BR'),
                         pasta
-                    }));
+                    };
+                    });
 
                     fotosCliente = fotosCliente.concat(fotosFormatadas);
                 } catch (error) {
@@ -146,12 +151,13 @@ class GaleriaSimples {
                         if (parts.length >= 3) {
                             const [pasta, nomeArquivo, urlFoto] = parts;
                             if (pastasPermitidas.includes(pasta.trim())) {
+                                const previewUrl = urlFoto.trim();
                                 fotosCliente.push({
                                     id: `${pasta}_${nomeArquivo}`,
                                     name: nomeArquivo.trim(),
                                     url: urlFoto.trim(),
                                     thumbnailUrl: urlFoto.trim(),
-                                    previewUrl: urlFoto.trim(),
+                                    previewUrl,
                                     album: this.DEFAULT_ALBUM_NAME,
                                     description: '',
                                     dateFormatted: new Date().toLocaleDateString('pt-BR'),
@@ -751,7 +757,9 @@ class GaleriaSimples {
         if (!photo) return;
 
         document.getElementById('modalPhotoName').textContent = photo.name;
-        document.getElementById('modalImage').src = photo.previewUrl;
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = photo.previewUrl || photo.thumbnailUrl || photo.url || '';
+        modalImage.alt = photo.name || 'Foto selecionada';
         document.getElementById('photoDate').textContent = photo.dateFormatted;
         
         document.getElementById('photoCounter').textContent = 
