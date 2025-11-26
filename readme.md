@@ -135,6 +135,37 @@ python main.py
 # 4. Envie o link via WhatsApp
 ```
 
+- Durante a criação do token o sistema lista todos os arquivos JSON existentes em `fotos/` (gerados pelo sincronizador do Drive). Basta selecionar um ou mais álbuns e eles serão gravados no campo `pastas_permitidas` do `tokens.json`.
+- O portal só carregará os álbuns autorizados para cada token, garantindo que cada cliente veja apenas as fotos designadas.
+- Informe também o WhatsApp do cliente: o gerador monta automaticamente um link `wa.me` com o texto pronto, incluindo o token e os dias restantes, facilitando o envio pelo celular ou computador.
+
+### 4️⃣ **Sincronização automática dos álbuns (Google Drive)**
+
+```bash
+# 1. Instale as dependências Node
+npm install
+
+# 2. Compartilhe a pasta "Ensaios" com o e-mail do service account
+# (portal-gabriel-lima-retratos@portal-gabriel-lima-retratos.iam.gserviceaccount.com)
+
+# 3. Ajuste as credenciais e caminhos
+# Edite sync.config.json (rootFolderId, pasta de saída e estratégia de thumbnails)
+
+# 4. Gere os JSONs a partir das pastas do Drive
+npm run sync:albuns
+```
+
+- `scripts/sync-drive.js` lê cada subpasta dentro da pasta raiz definida, cria um álbum por subpasta e salva um arquivo JSON em `fotos/`.
+- Use o arquivo de serviço em `GCAPI/*.json` ou defina `GOOGLE_APPLICATION_CREDENTIALS`; basta informar o caminho em `sync.config.json` ou compartilhar diretamente com o service account.
+- Campos úteis do config:
+  - `rootFolderId`: ID da pasta “Ensaios” no Drive (copie da URL compartilhada).
+  - `dest`: pasta local onde os JSONs serão salvos.
+  - `onlyImages`: filtra apenas `mimeType` começando com `image/`.
+  - `urlTemplate`: padrão de URL das fotos (ex.: `https://drive.google.com/uc?id={id}`).
+  - `thumbnail.template`: template para miniaturas (`{id}` é substituído automaticamente).
+
+> Atualizou uma subpasta no Drive? Rode `npm run sync:albuns` e o portal já terá o JSON atualizado, pronto para deploy.
+
 ---
 
 ## 📱 Como Usar

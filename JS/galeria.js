@@ -97,17 +97,27 @@ class GaleriaSimples {
         this.showLoading(true);
         
         try {
-            // Buscar fotos da pasta específica do cliente
-            // Primeiro tenta carregar de um arquivo específico da pasta
+            const pastasPermitidas = Array.isArray(clientData.pastasPermitidas) && clientData.pastasPermitidas.length
+                ? clientData.pastasPermitidas
+                : clientData.pasta ? [clientData.pasta] : [];
+
+            if (!pastasPermitidas.length) {
+                throw new Error('Nenhum álbum associado a este token.');
+            }
+
             let fotosCliente = [];
-            
-            try {
-                // Tentar carregar arquivo específico da pasta (se existir)
-                const response = await fetch(`fotos/${clientData.pasta}.json`);
-                if (response.ok) {
+
+            for (const pasta of pastasPermitidas) {
+                try {
+                    const response = await fetch(`fotos/${pasta}.json`);
+                    if (!response.ok) {
+                        console.warn(`Arquivo fotos/${pasta}.json não encontrado.`, response.status);
+                        continue;
+                    }
+
                     const fotosData = await response.json();
-                    fotosCliente = fotosData.map((foto, index) => ({
-                        id: `${clientData.pasta}_${index}`,
+                    const fotosFormatadas = fotosData.map((foto, index) => ({
+                        id: `${pasta}_${index}`,
                         name: foto.nome || `foto_${index + 1}.jpg`,
                         url: foto.url,
                         thumbnailUrl: foto.thumbnail || foto.url,
@@ -115,41 +125,43 @@ class GaleriaSimples {
                         album: foto.album || this.DEFAULT_ALBUM_NAME,
                         description: foto.descricao || '',
                         dateFormatted: foto.data || new Date().toLocaleDateString('pt-BR'),
-                        pasta: clientData.pasta
+                        pasta
                     }));
+
+                    fotosCliente = fotosCliente.concat(fotosFormatadas);
+                } catch (error) {
+                    console.warn(`Erro ao carregar fotos do álbum ${pasta}:`, error);
                 }
-            } catch (error) {
-                console.log('Arquivo específico não encontrado, tentando fotos.txt...');
             }
-            
-            // Se não encontrou arquivo específico, usa o sistema de fotos.txt
+
+            // Se não encontrou arquivos JSON, tenta fallback usando fotos.txt
             if (fotosCliente.length === 0) {
-                const response = await fetch('fotos.txt');
-                const fotosData = await response.text();
-                
-                // Formato: PASTA|NOME_FOTO|URL_FOTO
-                const lines = fotosData.split('\n').filter(line => line.trim());
-                
-                for (const line of lines) {
-                    const parts = line.split('|');
-                    if (parts.length >= 3) {
-                        const [pasta, nomeArquivo, urlFoto] = parts;
-                        
-                        // Verificar se a foto pertence ao cliente
-                        if (pasta.trim() === clientData.pasta) {
-                            fotosCliente.push({
-                                id: `${pasta}_${nomeArquivo}`,
-                                name: nomeArquivo.trim(),
-                                url: urlFoto.trim(),
-                                thumbnailUrl: urlFoto.trim(),
-                                previewUrl: urlFoto.trim(),
-                                album: this.DEFAULT_ALBUM_NAME,
-                                description: '',
-                                dateFormatted: new Date().toLocaleDateString('pt-BR'),
-                                pasta: pasta.trim()
-                            });
+                try {
+                    const response = await fetch('fotos.txt');
+                    const fotosData = await response.text();
+                    const lines = fotosData.split('\n').filter(line => line.trim());
+
+                    for (const line of lines) {
+                        const parts = line.split('|');
+                        if (parts.length >= 3) {
+                            const [pasta, nomeArquivo, urlFoto] = parts;
+                            if (pastasPermitidas.includes(pasta.trim())) {
+                                fotosCliente.push({
+                                    id: `${pasta}_${nomeArquivo}`,
+                                    name: nomeArquivo.trim(),
+                                    url: urlFoto.trim(),
+                                    thumbnailUrl: urlFoto.trim(),
+                                    previewUrl: urlFoto.trim(),
+                                    album: this.DEFAULT_ALBUM_NAME,
+                                    description: '',
+                                    dateFormatted: new Date().toLocaleDateString('pt-BR'),
+                                    pasta: pasta.trim()
+                                });
+                            }
                         }
                     }
+                } catch (error) {
+                    console.warn('Falha ao usar fallback fotos.txt:', error);
                 }
             }
             

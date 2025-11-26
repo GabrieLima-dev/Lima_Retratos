@@ -1,0 +1,18 @@
+# macOS metadata
+.DS_Store
+._*
+
+# Node.js dependencies
+node_modules/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Token backups/logs (gerados automaticamente)
+backup_tokens/
+logs_acesso.json
+
+# Configs locais
+sync.config.json
+GCAPI/*.json

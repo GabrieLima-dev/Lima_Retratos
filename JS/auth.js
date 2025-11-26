@@ -111,11 +111,16 @@ class AuthSimples {
             }
 
             // Converter dados para formato do sistema
+            const pastasPermitidas = Array.isArray(clientData.pastas_permitidas) && clientData.pastas_permitidas.length
+                ? clientData.pastas_permitidas
+                : clientData.pasta ? [clientData.pasta] : [];
+
             const clienteFormatado = {
                 token: token,
                 cliente: clientData.cliente,
                 categoria: clientData.categoria,
-                pasta: clientData.pasta,
+                pasta: pastasPermitidas[0] || clientData.pasta || '',
+                pastasPermitidas,
                 expira_em: clientData.expira_em,
                 criado_em: clientData.criado_em,
                 downloads_permitidos: clientData.downloads_permitidos,

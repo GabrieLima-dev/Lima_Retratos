@@ -1,0 +1,12 @@
+{
+  "name": "gabriel-lima-retratos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portal Gabriel Lima Retratos - ferramentas auxiliares",
+  "scripts": {
+    "sync:albuns": "node scripts/sync-drive.js --config sync.config.json"
+  },
+  "dependencies": {
+    "googleapis": "^133.0.0"
+  }
+}

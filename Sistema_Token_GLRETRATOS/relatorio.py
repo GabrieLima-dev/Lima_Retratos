@@ -62,7 +62,8 @@ class RelatorioTokens:
                 print(f"\n👤 {dados['cliente']}")
                 print(f"   🔑 Token: {token}")
                 print(f"   📊 Status: {status}")
-                print(f"   📂 {dados['categoria']} → {dados['pasta']}")
+                pastas_texto = self.gt.formatar_pastas(dados)
+                print(f"   📂 {dados['categoria']} → {pastas_texto}")
                 print(f"   📅 Criado em: {datetime.fromisoformat(dados['criado_em']).strftime('%d/%m/%Y')}")
                 print(f"   🕒 Último acesso: {ultimo_acesso}")
                 print(f"   🔗 Total de acessos: {len(dados['acessos'])}")
@@ -215,17 +216,20 @@ class RelatorioTokens:
                 if dados['ativo']:
                     expira = datetime.fromisoformat(dados['expira_em'])
                     if expira > agora:  # Não expirado
-                        ativos.append((token, dados))
+                        dias_restantes = (expira - agora).days
+                        ativos.append((token, dados, dias_restantes))
             
             if not ativos:
                 print("📭 Nenhum token ativo encontrado.")
                 return
             
-            for token, dados in ativos:
-                expira = datetime.fromisoformat(dados['expira_em'])
-                dias_restantes = (expira - agora).days
-                
-                print(f"👤 {dados['cliente']} | Token: {token[:8]}... | {dias_restantes} dias restantes")
+            ativos.sort(key=lambda item: item[1]['cliente'])
+            
+            for token, dados, dias_restantes in ativos:
+                print(f"\n👤 {dados['cliente']}")
+                print(f"   🔑 Token completo: {token}")
+                print(f"   ⏳ Dias restantes: {dias_restantes}")
+                print(f"   📂 Álbuns: {self.gt.formatar_pastas(dados)}")
                 
         except Exception as e:
             print(f"❌ Erro ao listar tokens ativos: {e}")
