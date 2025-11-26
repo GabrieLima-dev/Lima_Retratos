@@ -296,9 +296,9 @@
     background: var(--dark-bg);
     border-bottom: 1px solid var(--glass-border);
     padding: 12px 0;
-    position: sticky;
-    top: 50px;
-    z-index: 100;
+    position: static;
+    top: auto;
+    z-index: auto;
     backdrop-filter: blur(20px);
 }
 

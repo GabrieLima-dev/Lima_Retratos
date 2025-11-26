@@ -169,7 +169,7 @@ class GerenciadorTokens:
             print("📁 Álbum: (nenhum definido)")
         print(f"⏰ Válido até: {datetime.fromisoformat(expira_em).strftime('%d/%m/%Y às %H:%M')}")
         print("\n📱 Link para enviar ao cliente:")
-        print(f"🌐 https://seusite.github.io/galeria?token={token}")
+        print(f"🌐 https://gabrielima-dev.github.io/Lima_Retratos/galeria.html")
         self.exibir_link_whatsapp(cliente, token, dias_validade, whatsapp)
         print("="*50)
         
