@@ -676,7 +676,7 @@ h1, h2, h3, h4, h5, h6 {
     /* border-radius: var(--border-radius-lg); */
     /* backdrop-filter: blur(50px);
     border: 1px groove var(--glass-border); */
-    text-align: right;
+    
     /* box-shadow: var(--shadow); */
 }
 
@@ -689,6 +689,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     letter-spacing: 0.5px;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    text-align: center;
 }
 
 .signature {
@@ -700,6 +701,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: 10px;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
     transform: rotate(-1.5deg);
+    text-align: right;
 }
 
 /* ===== FONTES MANUSCRITAS ===== */
