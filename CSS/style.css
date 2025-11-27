@@ -36,7 +36,7 @@
     /* Gradientes Light */
     --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     --gradient-dark: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
-    --gradient-overlay: linear-gradient(45deg, rgba(212, 175, 55, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%);
+    /* --gradient-overlay: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(0, 0, 0, 0.25) 100%); */
     
     /* Tipografia */
     --font-primary: 'Playfair Display', serif;
@@ -85,7 +85,7 @@
     /* Gradientes Dark */
     --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     --gradient-dark: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
-    --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+    /* --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.1) 0%, rgba(13, 17, 23, 0.3) 100%); */
     
     /* Efeitos Dark */
     --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -96,7 +96,7 @@
 /* ===== THEME TOGGLE BUTTON ===== */
 .theme-toggle {
     position: fixed;
-    top: 90px;
+    top: 5px;
     right: 20px;
     z-index: 1001;
     width: 56px;
@@ -211,7 +211,7 @@
         /* Gradientes Dark */
         --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
         --gradient-dark: linear-gradient(135deg, var(--dark-bg) 0%, var(--dark-secondary) 100%);
-        --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.9) 0%, rgba(13, 17, 23, 0.8) 100%);
+        --gradient-overlay: linear-gradient(45deg, rgba(44, 95, 65, 0.1) 0%, rgba(13, 17, 23, 0.3) 100%);
         
         /* Efeitos Dark */
         --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -417,19 +417,19 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     width: 100%;
     z-index: 1000;
-    background: rgba(13, 17, 23, 0.95);
-    backdrop-filter: blur(20px);
+    background: rgba(13, 17, 23, 0.15);
+    backdrop-filter: blur(5px);
     border-bottom: none;
     transition: var(--transition);
 }
 
 .header.scrolled {
-    background: rgba(13, 17, 23, 0.98);
+    background: rgba(13, 17, 23, 0.3);
     box-shadow: var(--shadow-light);
 }
 
 .nav {
-    padding: 20px 0;
+    padding: 5px 0;
 }
 
 .nav-container {
@@ -448,8 +448,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo-img {
-    width: 45px;
-    height: 45px;
+    width: 160px;
+    height: 60px;
     object-fit: contain;
     filter: brightness(1.2);
 }
@@ -671,13 +671,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .elegant-message {
-    background: var(--glass-bg);
-    padding: 30px;
-    border-radius: var(--border-radius-lg);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
+    /* background: var(--glass-bg); */
+    padding: 5px;
+    /* border-radius: var(--border-radius-lg); */
+    /* backdrop-filter: blur(50px);
+    border: 1px groove var(--glass-border); */
     text-align: right;
-    box-shadow: var(--shadow);
+    /* box-shadow: var(--shadow); */
 }
 
 .elegant-message p {
