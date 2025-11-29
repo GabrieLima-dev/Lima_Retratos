@@ -182,7 +182,10 @@
     <div id="photoModal" class="photo-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalPhotoName">Nome da Foto</h3>
+                <div class="modal-title-wrapper">
+                    <h3 id="modalPhotoName">Nome da Foto</h3>
+                    <span id="modalPhotoDate" class="photo-date-chip">-</span>
+                </div>
                 <div class="modal-actions">
                     <button id="downloadSingleBtn" class="btn btn-primary">
                         <i class="fas fa-download"></i>
@@ -196,10 +199,6 @@
             
             <div class="modal-body">
                 <img id="modalImage" src="" alt="">
-                <div class="modal-info">
-                    <p><strong>Tamanho:</strong> <span id="photoSize">-</span></p>
-                    <p><strong>Data:</strong> <span id="photoDate">-</span></p>
-                </div>
             </div>
             
             <div class="modal-navigation">

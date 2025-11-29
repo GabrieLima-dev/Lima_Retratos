@@ -252,10 +252,12 @@ class GaleriaSimples {
         card.innerHTML = `
             <div class="album-cover">
                 <img src="${coverUrl}" alt="${albumName}">
-            </div>
-            <div class="album-meta">
-                <h4>${albumName}</h4>
-                <p>${totalText}</p>
+                <span class="album-count-badge" aria-label="${totalText}">${summary.count}</span>
+                <div class="album-overlay">
+                    <div class="album-meta">
+                        <h4>${albumName}</h4>
+                    </div>
+                </div>
             </div>
         `;
 
@@ -761,7 +763,10 @@ class GaleriaSimples {
         const modalImage = document.getElementById('modalImage');
         modalImage.src = photo.previewUrl || photo.thumbnailUrl || photo.url || '';
         modalImage.alt = photo.name || 'Foto selecionada';
-        document.getElementById('photoDate').textContent = photo.dateFormatted;
+        const modalPhotoDate = document.getElementById('modalPhotoDate');
+        if (modalPhotoDate) {
+            modalPhotoDate.textContent = photo.dateFormatted || '-';
+        }
         
         document.getElementById('photoCounter').textContent = 
             `${photoIndex + 1} de ${photos.length}`;
