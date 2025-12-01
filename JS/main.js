@@ -294,16 +294,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== LIGHTBOX =====
     function setupLightbox() {
-        // Portfolio items
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const portfolioItem = btn.closest('.portfolio-item');
-                const img = portfolioItem.querySelector('img');
-                const title = portfolioItem.querySelector('h3').textContent;
-                const description = portfolioItem.querySelector('p').textContent;
+        if (!lightbox) return;
+
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('h3')?.textContent || '';
+                const description = item.querySelector('p')?.textContent || '';
                 
-                openLightbox(img.src, title, description);
+                if (img) {
+                    openLightbox(img.src, title, description);
+                }
             });
         });
 
@@ -701,8 +702,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Track lightbox opens
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
                 console.log('Lightbox opened');
                 // Add your analytics code here
             });
@@ -836,16 +837,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ===== LIGHTBOX =====
     function setupLightbox() {
-        // Portfolio items
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const portfolioItem = btn.closest('.portfolio-item');
-                const img = portfolioItem.querySelector('img');
-                const title = portfolioItem.querySelector('h3').textContent;
-                const description = portfolioItem.querySelector('p').textContent;
+        if (!lightbox) return;
+
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                const title = item.querySelector('h3')?.textContent || '';
+                const description = item.querySelector('p')?.textContent || '';
                 
-                openLightbox(img.src, title, description);
+                if (img) {
+                    openLightbox(img.src, title, description);
+                }
             });
         });
 
@@ -1237,8 +1239,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Track lightbox opens
-        document.querySelectorAll('.view-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+        portfolioItems.forEach(item => {
+            item.addEventListener('click', () => {
                 console.log('Lightbox opened');
                 // Add your analytics code here
             });

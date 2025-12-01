@@ -1154,6 +1154,7 @@ h1, h2, h3, h4, h5, h6 {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     border: 1px solid var(--glass-border);
+    cursor: zoom-in;
 }
 
 .portfolio-item:hover {
@@ -1187,7 +1188,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--overlay-green);
+    background: rgba(13, 17, 23, 0.35);
     color: var(--text-primary);
     display: flex;
     flex-direction: column;
@@ -1197,7 +1198,8 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
     transition: var(--transition);
     padding: 30px;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--glass-border);
 }
 
 .portfolio-item:hover .portfolio-overlay {
