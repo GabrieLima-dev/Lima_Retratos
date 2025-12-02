@@ -52,27 +52,31 @@
 
 ```bash
 gabriel-lima-retratos/
-├── 📄 index.html              # Página principal
-├── 📄 galeria.html            # Área do cliente
-├── 📁 css/
-│   ├── 🎨 style.css           # Estilos principais
-│   └── 🎨 galeria.css         # Estilos da galeria
-├── 📁 js/
-│   ├── ⚡ main.js             # JavaScript principal
-│   ├── 🔐 auth.js             # Sistema de autenticação
-│   ├── ☁️ Google Drive-api.js         # Integração com Google Drive API
-│   ├── 🖼️ watermark.js        # Sistema de marca d'água
-│   ├── 🖥️ galeria.js          # Controle da galeria
-│   └── ⚙️ config.js           # Configurações do sistema
-├── 📁 assets/
-│   ├── 🖼️ logo.png            # Logo para marca d'água
-│   └── 🎯 favicon.png         # Favicon do site
-├── 📁 python/
-│   ├── 🐍 main.py             # Menu principal
-│   ├── 🎫 gerar_token.py      # Gerador de tokens
-│   └── 📊 relatorio.py        # Relatórios de clientes
-├── 📊 tokens.json             # Arquivo de tokens (gerado)
-└── 📚 README.md               # Esta documentação
+├── 📄 index.html                   # Landing page pública
+├── 📄 galeria.html                 # Área autenticada por token
+├── 📁 CSS/
+│   ├── 🎨 style.css                # Estilos e temas da landing
+│   └── 🎨 galeria.css              # Layout da área do cliente
+├── 📁 JS/
+│   ├── ⚡ main.js                  # Interações da landing
+│   ├── 🔐 auth.js                  # Autenticação por token
+│   ├── 🖥️ galeria.js               # Renderização/controles da galeria
+│   └── 🌗 theme_system_js.js       # Sistema global de temas
+├── 📁 scripts/
+│   └── ☁️ sync-drive.js            # Sincronização Google Drive → JSON
+├── ⚙️ sync.config.json             # Configuração do sincronizador
+├── 📁 Sistema_Token_GLRETRATOS/
+│   ├── 🐍 main.py                  # Menu CLI principal
+│   ├── 🎫 gerar_token.py           # Emissor e backup de tokens
+│   └── 📊 relatorio.py             # Relatórios e auditorias
+├── 📁 fotos/                       # Álbuns exportados em JSON
+├── 📁 backup_tokens/               # Cópias rotativas de tokens.json
+├── 📁 GCAPI/                       # Credenciais do service account
+├── 📁 assets/                      # Favicon e logomarca
+├── 📄 tokens.json                  # Tokens ativos
+├── 📄 logs_acesso.json             # Registros usados pelo CLI
+├── 📄 package.json                 # Dependências do sincronizador
+└── 📚 README.md                    # Documentação
 ```
 
 ---
@@ -111,7 +115,7 @@ photographer: {
 2. **Crie um projeto** ou reutilize um existente
 3. **Ative** a Google Drive API em *APIs e serviços → Biblioteca*
 4. **Crie um Service Account** e gere a chave JSON
-5. **Compartilhe** a pasta "Ensaios" com o e-mail do service account
+5. **Compartilhe** a pasta do Google Drive que será mapeada (a mesma que ficará definida no `rootFolderId` do sincronizador) com o e-mail do service account
 6. **Atualize** `js/config.js` (ou seu arquivo de ambiente):
 
 ```javascript
@@ -150,26 +154,28 @@ python main.py
 # 1. Instale as dependências Node
 npm install
 
-# 2. Compartilhe a pasta "Ensaios" com o e-mail do service account
-# (portal-gabriel-lima-retratos@portal-gabriel-lima-retratos.iam.gserviceaccount.com)
+# 2. Compartilhe com o service account a pasta que o sincronizador deve ler
+#    (o mesmo e-mail configurado no arquivo de credenciais)
 
-# 3. Ajuste as credenciais e caminhos
-# Edite sync.config.json (rootFolderId, pasta de saída e estratégia de thumbnails)
+# 3. Ajuste `sync.config.json` para apontar
+#    - pasta raiz no Drive (rootFolderId)
+#    - pasta local de destino (dest)
+#    - estratégia de thumbnails/descrições
 
-# 4. Gere os JSONs a partir das pastas do Drive
+# 4. Gere os JSONs a partir da pasta configurada no Drive
 npm run sync:albuns
 ```
 
-- `scripts/sync-drive.js` lê cada subpasta dentro da pasta raiz definida, cria um álbum por subpasta e salva um arquivo JSON em `fotos/`.
+- `scripts/sync-drive.js` mapeia a pasta do Drive especificada em `sync.config.json` e transforma cada subpasta em um arquivo JSON salvo no diretório `fotos/`.
 - Use o arquivo de serviço em `GCAPI/*.json` ou defina `GOOGLE_APPLICATION_CREDENTIALS`; basta informar o caminho em `sync.config.json` ou compartilhar diretamente com o service account.
 - Campos úteis do config:
-  - `rootFolderId`: ID da pasta “Ensaios” no Drive (copie da URL compartilhada).
+  - `rootFolderId`: ID da pasta do Google Drive que será lida pelo sincronizador (copiado da URL quando a pasta estiver aberta).
   - `dest`: pasta local onde os JSONs serão salvos.
   - `onlyImages`: filtra apenas `mimeType` começando com `image/`.
   - `urlTemplate`: padrão de URL das fotos (ex.: `https://drive.google.com/uc?id={id}`).
   - `thumbnail.template`: template para miniaturas (`{id}` é substituído automaticamente).
 
-> Atualizou uma subpasta no Drive? Rode `npm run sync:albuns` e o portal já terá o JSON atualizado, pronto para deploy.
+> Sempre que a pasta configurada no Drive for atualizada, execute `npm run sync:albuns` novamente para recriar os JSONs antes de publicar o site.
 
 ---
 
@@ -1033,4 +1039,4 @@ Este sistema oferece uma solução completa e profissional para fotógrafos que 
 
 ---
 
-*Última atualização: Novembro 2025*
+*Última atualização: Dezembro 2025*
