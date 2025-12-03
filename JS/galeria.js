@@ -519,6 +519,8 @@ class GaleriaSimples {
         const modalIndex = typeof index === 'number' ? index : this.photoIndexMap.get(photo.id) || 0;
         
         const isSelected = this.selectedPhotos.has(photo.id);
+        const photoName = this.escapeHtml(photo.name || 'Foto');
+        const photoDate = this.escapeHtml(photo.dateFormatted || '');
         if (isSelected) {
             photoItem.classList.add('selected');
         }
@@ -535,20 +537,13 @@ class GaleriaSimples {
             
             <div class="photo-container">
                 <img src="${photo.thumbnailUrl}" 
-                     alt="${photo.name}"
+                     alt="${photoName}"
                      onclick="galeriaSimples.openModal(${modalIndex})"
                      loading="lazy">
                 
                 <div class="photo-overlay">
-                    <div class="overlay-actions">
-                        <button class="overlay-btn" onclick="galeriaSimples.openModal(${modalIndex})" 
-                                title="Visualizar">
-                            <i class="fas fa-search-plus"></i>
-                        </button>
-                        <button class="overlay-btn" onclick="galeriaSimples.downloadPhoto('${photo.id}')" 
-                                title="Baixar">
-                            <i class="fas fa-download"></i>
-                        </button>
+                    <div class="photo-overlay-content">
+                        <span class="photo-overlay-title">${photoName}</span>
                     </div>
                 </div>
                 
@@ -557,12 +552,23 @@ class GaleriaSimples {
             </div>
             
             <div class="photo-info">
-                <div class="photo-name">${photo.name}</div>
+                <div class="photo-name">${photoName}</div>
                 <div class="photo-meta">
-                    <span class="photo-date">${photo.dateFormatted}</span>
+                    <span class="photo-date">${photoDate}</span>
                 </div>
             </div>
         `;
+
+        photoItem.addEventListener('click', (event) => {
+            if (event.target.closest('.photo-checkbox') || event.target.closest('button')) {
+                return;
+            }
+
+            if (this.currentView === 'list') {
+                event.preventDefault();
+                this.openModal(modalIndex);
+            }
+        });
 
         return photoItem;
     }
