@@ -1,49 +1,6 @@
 /* ===== GALERIA - ESTILOS ESPECÍFICOS APRIMORADOS ===== */
 
 /* ===== THEME TOGGLE BUTTON PARA GALERIA ===== */
-.theme-toggle {
-    position: fixed;
-    top: 90px;
-    right: 20px;
-    z-index: 1001;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    border: 2px solid var(--glass-border);
-    background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    cursor: pointer;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: var(--shadow-light);
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1);
-    box-shadow: var(--glow);
-    border-color: var(--primary-color);
-}
-
-.theme-toggle .icon {
-    font-size: 20px;
-    color: var(--text-primary);
-    transition: var(--transition);
-}
-
-.theme-toggle .light-icon {
-    display: none;
-}
-
-[data-theme="dark"] .theme-toggle .light-icon {
-    display: block;
-}
-
-[data-theme="dark"] .theme-toggle .dark-icon {
-    display: none;
-}
-
 /* ===== LOADING SCREEN ===== */
 .loading-screen {
     position: fixed;
@@ -212,14 +169,22 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 600;
     transition: var(--transition);
 }
 
 .help-link:hover {
-    color: var(--text-primary);
+    color: var(--primary-dark);
+}
+
+[data-theme="dark"] .help-link {
+    color: var(--accent-emerald);
+}
+
+[data-theme="dark"] .help-link:hover {
+    color: var(--white);
 }
 
 /* ===== CLIENT INFO ===== */
@@ -276,9 +241,9 @@
     font-family: var(--font-primary);
     font-size: 26px;
     font-weight: 700;
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     margin-bottom: 1px;
-    background: linear-gradient(135deg, var(--accent-emerald) 0%, var(--primary-light) 100%);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -794,7 +759,7 @@
 
 .photo-size {
     background: var(--dark-tertiary);
-    color: var(--accent-emerald);
+    color: var(--primary-color);
     padding: 4px 10px;
     border-radius: 12px;
     font-weight: 600;

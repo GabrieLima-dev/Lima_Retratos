@@ -328,7 +328,7 @@ window.toggleTheme = function() {
 const themeToggleCSS = `
 .theme-toggle {
     position: fixed;
-    top: 90px;
+    top: 5px;
     right: 20px;
     z-index: 1001;
     width: 56px;
@@ -380,7 +380,7 @@ const themeToggleCSS = `
 
 @media (max-width: 1024px) {
     .theme-toggle {
-        top: 80px;
+        top: 70px;
         right: 15px;
         width: 48px;
         height: 48px;
