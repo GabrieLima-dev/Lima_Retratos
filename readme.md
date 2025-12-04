@@ -30,6 +30,8 @@
 - ✅ Formulário de contato integrado
 - ✅ Design moderno e elegante
 - ✅ SEO otimizado
+- ✅ Tema claro/escuro sincronizado entre landing e galeria
+- ✅ Lightbox com carregamento progressivo (preview instantâneo + alta resolução)
 
 </td>
 <td width="50%">
@@ -359,8 +361,9 @@ watermark: {
 #### **⬇️ Downloads**
 - 📄 **Individual** - Uma foto
 - 📦 **Múltiplo** - Lote selecionado
-- 📊 **Progresso** - Barra visual
+- 📊 **Progresso** - Barra visual com indicador contínuo
 - 🛡️ **Proteção** - Marca d'água
+- 🖼️ **Alta qualidade** - Modal abre preview rápido e troca para versão em alta; downloads sempre usam a melhor fonte
 - 📈 **Rastreamento** - Logs
 
 </td>
