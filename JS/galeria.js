@@ -910,7 +910,7 @@ class GaleriaSimples {
     }
 
     // ===== DOWNLOADS COM RASTREAMENTO =====
-    downloadPhoto(photoId) {
+    async downloadPhoto(photoId) {
         const photo = this.currentPhotos.find(p => p.id === photoId);
         if (!photo) return;
 
@@ -920,9 +920,14 @@ class GaleriaSimples {
             // Download direto para usuários autenticados
             const downloadUrl = this.getDownloadSource(photo);
             if (downloadUrl) {
-                this.downloadDirect(downloadUrl, photo.name);
-                this.showNotification(`${photo.name} baixado!`, 'success');
-                this.registrarDownload(photo);
+                this.showNotification('Preparando download da foto. Aguarde...', 'info');
+                try {
+                    await this.downloadPhotoFromUrl(downloadUrl, photo);
+                    this.showNotification(`${photo.name} baixado!`, 'success');
+                } catch (error) {
+                    console.error('Erro ao baixar foto individual:', error);
+                    this.showNotification('Não foi possível baixar esta foto. Tente novamente.', 'error');
+                }
             } else {
                 this.showNotification('Não foi possível encontrar a versão em alta desta foto.', 'error');
             }
@@ -961,10 +966,10 @@ class GaleriaSimples {
         }
     }
 
-    downloadCurrentPhoto() {
+    async downloadCurrentPhoto() {
         const photo = this.currentModalPhotos[this.currentPhotoIndex];
         if (photo) {
-            this.downloadPhoto(photo.id);
+            await this.downloadPhoto(photo.id);
         }
     }
 
@@ -987,25 +992,103 @@ class GaleriaSimples {
             return;
         }
 
-        for (const photo of selectedList) {
-            const downloadUrl = this.getDownloadSource(photo);
-            if (!downloadUrl) continue;
-            this.downloadDirect(downloadUrl, photo.name);
-            await new Promise(resolve => setTimeout(resolve, 500)); // Delay entre downloads
+        if (selectedList.length === 1) {
+            await this.downloadPhoto(selectedList[0].id);
+            return;
         }
 
-        this.showNotification(`${selectedList.length} fotos baixadas!`, 'success');
+        if (typeof JSZip === 'undefined') {
+            this.showNotification('Não foi possível preparar o arquivo ZIP. Atualize a página e tente novamente.', 'error');
+            return;
+        }
+
+        try {
+            this.showNotification(`Preparando arquivo ZIP com ${selectedList.length} fotos. Aguarde...`, 'info');
+            await this.downloadPhotosAsZip(selectedList);
+            this.showNotification(`ZIP com ${selectedList.length} fotos pronto para download!`, 'success');
+        } catch (error) {
+            console.error('Erro ao gerar ZIP:', error);
+            this.showNotification('Não foi possível gerar o arquivo ZIP. Tente novamente.', 'error');
+        }
     }
 
-    downloadDirect(url, filename) {
+    async downloadPhotosAsZip(photos = []) {
+        const zip = new JSZip();
+        const folder = zip.folder('fotos');
+        const usedNames = {};
+        let added = 0;
+
+        for (const photo of photos) {
+            const downloadUrl = this.getDownloadSource(photo);
+            if (!downloadUrl) continue;
+
+            try {
+                const blob = await this.fetchPhotoBlob(downloadUrl);
+                const filename = this.getUniqueFilename(photo.name || `foto_${added + 1}.jpg`, usedNames);
+                folder.file(filename, blob);
+                added += 1;
+                this.registrarDownload(photo);
+            } catch (error) {
+                console.warn(`Erro ao incluir ${photo.name} no ZIP:`, error);
+            }
+        }
+
+        if (added === 0) {
+            throw new Error('Nenhuma foto válida para o ZIP');
+        }
+
+        const zipBlob = await zip.generateAsync({ type: 'blob' });
+        const zipName = `gabriel-lima-fotos-${Date.now()}.zip`;
+        this.triggerBlobDownload(zipBlob, zipName);
+    }
+
+    async fetchPhotoBlob(url) {
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) {
+            throw new Error(`Falha ao baixar recurso: ${response.status}`);
+        }
+        return await response.blob();
+    }
+
+    triggerBlobDownload(blob, filename) {
+        const objectUrl = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = url;
+        link.href = objectUrl;
         link.download = filename;
-        link.target = '_blank';
-        
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+        URL.revokeObjectURL(objectUrl);
+    }
+
+    async downloadPhotoFromUrl(url, photo) {
+        const blob = await this.fetchPhotoBlob(url);
+        const filename = this.getUniqueFilename(photo.name || 'foto.jpg');
+        this.triggerBlobDownload(blob, filename);
+        this.registrarDownload(photo);
+    }
+
+    sanitizeFilename(name = '') {
+        const sanitized = name
+            .replace(/[<>:"/\\|?*]+/g, '_')
+            .replace(/\s+/g, '_')
+            .trim();
+        return sanitized || 'foto';
+    }
+
+    getUniqueFilename(name, usedNames = {}) {
+        const sanitized = this.sanitizeFilename(name);
+        const extIndex = sanitized.lastIndexOf('.');
+        const base = extIndex > 0 ? sanitized.slice(0, extIndex) : sanitized;
+        const ext = extIndex > 0 ? sanitized.slice(extIndex) : '';
+        const key = sanitized.toLowerCase();
+        const count = (usedNames[key] || 0) + 1;
+        usedNames[key] = count;
+        if (count === 1) {
+            return sanitized;
+        }
+        const safeBase = base || 'foto';
+        return `${safeBase}_${count}${ext}`;
     }
 
     // ===== NAVEGAÇÃO POR TECLADO =====
