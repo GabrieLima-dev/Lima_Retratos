@@ -511,6 +511,107 @@ class GaleriaSimples {
             .replace(/'/g, '&#039;');
     }
 
+    extractDriveId(url = '') {
+        if (!url) return null;
+        const idParamMatch = url.match(/[?&]id=([^&]+)/);
+        if (idParamMatch) {
+            return idParamMatch[1];
+        }
+
+        const ucMatch = url.match(/\/d\/([^/]+)/);
+        if (ucMatch) {
+            return ucMatch[1];
+        }
+
+        return null;
+    }
+
+    getDriveHighResSources(photo = {}) {
+        const sources = [];
+        const driveId = this.extractDriveId(photo.url) 
+            || this.extractDriveId(photo.previewUrl) 
+            || this.extractDriveId(photo.thumbnailUrl);
+        
+        if (driveId) {
+            sources.push(`https://lh3.googleusercontent.com/d/${driveId}=w3600`);
+            sources.push(`https://drive.google.com/uc?export=download&id=${driveId}`);
+            sources.push(`https://drive.google.com/thumbnail?id=${driveId}&sz=w2000`);
+        }
+
+        if (photo.url) sources.push(photo.url);
+        return [...new Set(sources.filter(Boolean))];
+    }
+
+    loadModalImage(imageElement, photo) {
+        const previewSource = photo.previewUrl || photo.thumbnailUrl || photo.url || '';
+        if (previewSource) {
+            imageElement.src = previewSource;
+        } else {
+            imageElement.removeAttribute('src');
+        }
+
+        imageElement.alt = photo.name || 'Foto selecionada';
+
+        const highResSources = this.getDriveHighResSources(photo).filter(src => src !== previewSource);
+        if (!highResSources.length) {
+            this.setModalLoading(false);
+            return;
+        }
+
+        this.setModalLoading(true);
+
+        const highResImage = new Image();
+        let sourceIndex = 0;
+
+        const tryLoad = () => {
+            if (sourceIndex >= highResSources.length) {
+                this.setModalLoading(false);
+                return;
+            }
+
+            highResImage.src = highResSources[sourceIndex];
+        };
+
+        highResImage.onload = () => {
+            this.setModalLoading(false);
+            imageElement.src = highResImage.src;
+        };
+
+        highResImage.onerror = () => {
+            sourceIndex += 1;
+            tryLoad();
+        };
+
+        tryLoad();
+    }
+
+    setModalLoading(isLoading) {
+        const loadingBar = document.getElementById('modalLoadingBar');
+        if (!loadingBar) return;
+        const progress = loadingBar.querySelector('.modal-loading-progress');
+        if (isLoading) {
+            loadingBar.classList.add('active');
+            if (progress) {
+                progress.style.width = '0%';
+                requestAnimationFrame(() => {
+                    progress.style.width = '100%';
+                });
+            }
+        } else {
+            loadingBar.classList.remove('active');
+            if (progress) {
+                progress.style.width = '0%';
+            }
+        }
+    }
+
+    getDownloadSource(photo = {}) {
+        const sources = this.getDriveHighResSources(photo);
+        if (photo.previewUrl) sources.push(photo.previewUrl);
+        if (photo.thumbnailUrl) sources.push(photo.thumbnailUrl);
+        return sources.find(Boolean) || '';
+    }
+
     // ===== CRIAR ELEMENTO DE FOTO =====
     createPhotoElement(photo, index) {
         const photoItem = document.createElement('div');
@@ -767,8 +868,7 @@ class GaleriaSimples {
 
         document.getElementById('modalPhotoName').textContent = photo.name;
         const modalImage = document.getElementById('modalImage');
-        modalImage.src = photo.previewUrl || photo.thumbnailUrl || photo.url || '';
-        modalImage.alt = photo.name || 'Foto selecionada';
+        this.loadModalImage(modalImage, photo);
         const modalPhotoDate = document.getElementById('modalPhotoDate');
         if (modalPhotoDate) {
             modalPhotoDate.textContent = photo.dateFormatted || '-';
@@ -789,6 +889,7 @@ class GaleriaSimples {
         const photoModal = document.getElementById('photoModal');
         photoModal.classList.remove('active');
         document.body.style.overflow = 'auto';
+        this.setModalLoading(false);
     }
 
     showPreviousPhoto() {
@@ -812,11 +913,15 @@ class GaleriaSimples {
         
         if (isAuthenticated) {
             // Download direto para usuários autenticados
-            this.downloadDirect(photo.url, photo.name);
-            this.showNotification(`${photo.name} baixado!`, 'success');
+            const downloadUrl = this.getDownloadSource(photo);
+            if (downloadUrl) {
+                this.downloadDirect(downloadUrl, photo.name);
+                this.showNotification(`${photo.name} baixado!`, 'success');
+                this.registrarDownload(photo);
+            } else {
+                this.showNotification('Não foi possível encontrar a versão em alta desta foto.', 'error');
+            }
             
-            // Registrar download
-            this.registrarDownload(photo);
         } else {
             // Visitante - mostrar mensagem
             this.showNotification('Faça login com seu token para baixar as fotos!', 'warning');
@@ -878,7 +983,9 @@ class GaleriaSimples {
         }
 
         for (const photo of selectedList) {
-            this.downloadDirect(photo.url, photo.name);
+            const downloadUrl = this.getDownloadSource(photo);
+            if (!downloadUrl) continue;
+            this.downloadDirect(downloadUrl, photo.name);
             await new Promise(resolve => setTimeout(resolve, 500)); // Delay entre downloads
         }
 
