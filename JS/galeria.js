@@ -14,6 +14,7 @@ class GaleriaSimples {
         this.selectedAlbum = null;
         this.currentModalPhotos = [];
         this.photoIndexMap = new Map();
+        this.currentModalLoadToken = 0;
         
         this.init();
     }
@@ -553,6 +554,8 @@ class GaleriaSimples {
         imageElement.alt = photo.name || 'Foto selecionada';
 
         const highResSources = this.getDriveHighResSources(photo).filter(src => src !== previewSource);
+        const loadToken = ++this.currentModalLoadToken;
+
         if (!highResSources.length) {
             this.setModalLoading(false);
             return;
@@ -564,7 +567,7 @@ class GaleriaSimples {
         let sourceIndex = 0;
 
         const tryLoad = () => {
-            if (sourceIndex >= highResSources.length) {
+            if (sourceIndex >= highResSources.length || loadToken !== this.currentModalLoadToken) {
                 this.setModalLoading(false);
                 return;
             }
@@ -573,11 +576,13 @@ class GaleriaSimples {
         };
 
         highResImage.onload = () => {
+            if (loadToken !== this.currentModalLoadToken) return;
             this.setModalLoading(false);
             imageElement.src = highResImage.src;
         };
 
         highResImage.onerror = () => {
+            if (loadToken !== this.currentModalLoadToken) return;
             sourceIndex += 1;
             tryLoad();
         };

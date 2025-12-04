@@ -963,7 +963,7 @@
     width: 0%;
     height: 100%;
     background: var(--primary-color);
-    transition: width 0.3s ease;
+    transition: width 2s ease;
 }
 
 .modal-body img {
